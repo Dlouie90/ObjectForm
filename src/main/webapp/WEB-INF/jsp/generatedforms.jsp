@@ -47,7 +47,7 @@
 						href="form/editform.html?id=${form.id}"><button type="button"
 								class="btn btn-warning">Edit</button></a> <a
 						href="removeform.html?id=${form.id}"><button type="button"
-								class="btn btn-danger">Delete</button></a></td>
+								class="btn btn-danger">Delete</button></a>
 				</tr>
 			</c:forEach>
 		</tbody>

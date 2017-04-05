@@ -41,7 +41,7 @@ public class ObjectFormController {
 	public String mainPage() {
 		return "login";
 	}
-
+	
 	@RequestMapping(value = "/adminpage.html", method = RequestMethod.GET)
 	public String adminLogin(ModelMap maps) {
 		return "adminpage";
@@ -51,7 +51,7 @@ public class ObjectFormController {
 	public String adminLogin() {
 		return "adminpage";
 	}
-
+	
 	@RequestMapping(value = "/generatenewform.html", method = RequestMethod.GET)
 	public String generateNewForm(ModelMap maps) {
 		maps.put("form", new Form());
