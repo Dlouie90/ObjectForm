@@ -5,7 +5,7 @@
 <link href="../webjars/bootstrap/3.2.0/css/bootstrap.min.css"
 	rel="stylesheet">
 <meta charset="UTF-8">
-<title>Add Form Elements</title>
+<title>Edit Form Elements</title>
 </head>
 <body>
 	<ol class="breadcrumb">
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label">Form Element Question:</label>
+			<label class="col-sm-2 control-label">Form Element Name:</label>
 			<div class="col-sm-10">
 				<form:input path="name" type="text" class="form-control"
 					placeholder="Enter Form Element Name" name="elementTitle" />
@@ -39,31 +39,15 @@
 			<label class="col-sm-2 control-label">Is The Form Element
 				Required:</label>
 			<div class="radio">
-				<label><input type="radio" name="optradio">Required</label>
+				<label><input type="radio">Required</label>
 			</div>
 			<div class="radio">
-				<label><input type="radio" name="optradio">Not
-					Required</label>
+				<label><input type="radio">Not Required</label>
 			</div>
 		</div>
-		<!--  
-		<div class="form-group">
-			<label for="elementType" class="col-sm-2 control-label">Select
-				Form Element:</label>
-			<div class="col-sm-10">
-				<form:select path="type" class="form-control">
-					<form:option value="">Text Box</form:option>
-					<form:option value="">Text Area</form:option>
-					<form:option value="">Password Box</form:option>
-					<form:option value="">Check Box</form:option>
-					<form:option value="">Radio Button</form:option>
-				</form:select>
-			</div>
-		</div>
-		-->
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" name="add" value="Add" class="btn btn-info">
+				<input type="submit" name="edit" value="Edit" class="btn btn-info">
 			</div>
 		</div>
 	</form:form>

@@ -16,4 +16,6 @@ public interface PageDao {
 	List<FormElement> getElementsByPageId(Integer id);
 		
 	List<Page> getPages();
+
+	List<Page> getPagesByFormID(Integer id);
 }

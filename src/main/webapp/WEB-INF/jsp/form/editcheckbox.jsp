@@ -1,12 +1,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link href="../webjars/bootstrap/3.2.0/css/bootstrap.min.css"
 	rel="stylesheet">
 <meta charset="UTF-8">
-<title>Add Form Element</title>
+<title>Edit Multiple Choice</title>
 </head>
 <body>
 	<ol class="breadcrumb">
@@ -68,7 +67,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" name="add" value="Add" class="btn btn-info">
+				<input type="submit" name="edit" value="Edit" class="btn btn-info">
 			</div>
 		</div>
 	</form:form>

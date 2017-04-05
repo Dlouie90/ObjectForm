@@ -1,5 +1,6 @@
 package com.object.form.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.object.form.model.Member;
+import com.object.form.model.Role;
 import com.object.form.model.dao.MemberDAO;
 
 @Controller
@@ -33,7 +35,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/view.html",method = RequestMethod.GET)
-	private String view(@RequestParam Integer id,ModelMap model)
+	private String view(@RequestParam Integer id, ModelMap model)
 	{
 		Member member = memberDao.getMember(id);
 		
@@ -46,24 +48,26 @@ public class MemberController {
 	private String add(ModelMap model)
 	{
 		Member member = new Member();
+		List <Role> rolelist = new ArrayList<Role>();
+		Role role = new Role();
+		rolelist.add(role);
+		member.setRoles(rolelist);
 		
 		model.put("member", member);
-		
 		return "member/add";
 	}
 	
 	@RequestMapping(value="/member/add.html",method = RequestMethod.POST)
 	private String add( @ModelAttribute Member member)
 	{
-		Member savedMember = memberDao.saveMember(member);
-		
+		memberDao.saveMember(member);
+		System.out.println("POST WORKS");
 		return "redirect:list.html";
 	}
 
 	@RequestMapping(value="/member/edit.html",method = RequestMethod.GET)
 	private String edit(@RequestParam Integer id ,ModelMap model)
 	{
-		Member member = new Member();
 		
 		model.put("member", memberDao.getMember(id));
 		
@@ -73,9 +77,18 @@ public class MemberController {
 	@RequestMapping(value="/member/edit.html",method = RequestMethod.POST)
 	private String edit( @ModelAttribute Member member, SessionStatus status)
 	{
-		Member savedMember = memberDao.saveMember(member);
+		memberDao.saveMember(member);
 		
 		status.setComplete();
+		return "redirect:list.html";
+	}
+	
+	@RequestMapping(value="/member/delete.html")
+	private String edit(@RequestParam Integer id)
+	{
+		
+		memberDao.delete((memberDao.getMember(id)));
+		
 		return "redirect:list.html";
 	}
 	

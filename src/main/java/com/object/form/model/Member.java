@@ -15,6 +15,7 @@ package com.object.form.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,10 +52,10 @@ public class Member implements Serializable{
 	@Column(name="Passcode", columnDefinition = "varchar(30)")
 	private char[] passcode;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 			
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "member_roles",
     joinColumns=@JoinColumn(name = "member_id"),
     inverseJoinColumns=@JoinColumn(name="role_id"))

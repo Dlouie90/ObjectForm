@@ -10,6 +10,7 @@ package com.object.form.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class MultipleChoice extends FormElement{
 	@Column(name = "multiple_choice_type")
 	private int choiceType;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Choice> choices;
 	
   public Integer getNumberOfAllowedSelect() {

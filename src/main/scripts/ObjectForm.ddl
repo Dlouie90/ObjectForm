@@ -42,6 +42,7 @@ create sequence hibernate_sequence start 1 increment 1;
         is_required boolean,
         name varchar(255),
         title varchar(255),
+        class_type varchar(255),
         group_Id int4,
         default_value varchar(255),
         max_length int4,

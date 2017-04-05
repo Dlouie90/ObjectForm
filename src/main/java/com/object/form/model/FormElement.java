@@ -31,111 +31,136 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="elementType",
-    discriminatorType=DiscriminatorType.STRING
-)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "elementType", discriminatorType = DiscriminatorType.STRING)
 public abstract class FormElement implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "title")
 	private String title;
-	
+
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "class_type")
+	private String type;
+
 	@Column(name = "is_required")
 	private Boolean isRequired;
-	
+
 	@Column(name = "is_enabled")
 	private Boolean isEnabled;
-	
+
 	@Column(name = "is_multiple_answer_allowed")
 	boolean isMultipleAnswerAllowed;
-	
+
 	@ManyToOne
 	private Form form;
-	
+
 	@ManyToMany
-	@JoinTable(name = "formElement_answers",
-    			joinColumns=@JoinColumn(name = "formElement_id"),
-    			inverseJoinColumns=@JoinColumn(name="answer_id"))
+	@JoinTable(name = "formElement_answers", joinColumns = @JoinColumn(name = "formElement_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private List<Answer> answers;
-	
-	@ManyToMany(mappedBy="elements")
+
+	@ManyToMany
+	@JoinTable(name = "page_formElements", joinColumns = @JoinColumn(name = "formElement_id"), inverseJoinColumns = @JoinColumn(name = "page_id"))
 	private List<Page> pages;
-	
+
 	@OneToOne
 	private PDFElement pdfElement;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public List<Page> getPages() {
 		return pages;
 	}
+
 	public void setPages(List<Page> pages) {
 		this.pages = pages;
 	}
+
 	public PDFElement getPdfElement() {
 		return pdfElement;
 	}
+
 	public void setPdfElement(PDFElement pdfElement) {
 		this.pdfElement = pdfElement;
 	}
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
+
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Boolean getIsRequired() {
 		return isRequired;
 	}
+
 	public void setIsRequired(Boolean isRequired) {
 		this.isRequired = isRequired;
 	}
+
 	public Boolean getIsEnabled() {
 		return isEnabled;
 	}
+
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
+
 	public Form getForm() {
 		return form;
 	}
+
 	public void setForm(Form form) {
 		this.form = form;
 	}
+
 	public boolean isMultipleAnswerAllowed() {
 		return isMultipleAnswerAllowed;
 	}
+
 	public void setMultipleAnswerAllowed(boolean isMultipleAnswerAllowed) {
 		this.isMultipleAnswerAllowed = isMultipleAnswerAllowed;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }

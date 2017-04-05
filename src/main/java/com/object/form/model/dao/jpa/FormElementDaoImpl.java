@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.object.form.model.FormElement;
+import com.object.form.model.Textbox;
 import com.object.form.model.dao.FormElementDao;
 
 @Repository
@@ -25,6 +26,12 @@ public class FormElementDaoImpl implements FormElementDao {
 	@Override
 	@Transactional
 	public FormElement saveFormElement(FormElement element) {
+		return entityManager.merge(element);
+	}
+	
+	@Override
+	@Transactional
+	public Textbox saveTextBox(Textbox element) {
 		return entityManager.merge(element);
 	}
 

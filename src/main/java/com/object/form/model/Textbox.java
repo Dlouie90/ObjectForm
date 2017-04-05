@@ -13,35 +13,39 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("TextBox")
-public class Textbox extends FormElement{
+public class Textbox extends FormElement {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "default_value")
 	private String defaultValue;
-	
+
 	@Column(name = "max_length")
 	private Integer maxLength;
-	
+
 	@Column(name = "size")
 	private Integer size;
-	
-	
+
 	public String getDefaultValue() {
 		return defaultValue;
 	}
+
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
 	}
+
 	public Integer getMaxLength() {
 		return maxLength;
 	}
+
 	public void setMaxLength(Integer maxLength) {
 		this.maxLength = maxLength;
 	}
+
 	public Integer getSize() {
 		return size;
 	}
+
 	public void setSize(Integer size) {
 		this.size = size;
 	}

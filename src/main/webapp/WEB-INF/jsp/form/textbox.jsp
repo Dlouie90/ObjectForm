@@ -36,10 +36,10 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Is The Form Element Required:</label>
 			<div class="radio">
-			  <label><input type="radio" name="optradio">Required</label>
+			  <label><input type="radio">Required</label>
 			</div>
 			<div class="radio">
-			  <label><input type="radio" name="optradio">Not Required</label>
+			  <label><input type="radio">Not Required</label>
 			</div>
 		</div>
 		<div class="form-group">
