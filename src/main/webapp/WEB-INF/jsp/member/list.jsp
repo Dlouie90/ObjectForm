@@ -47,13 +47,12 @@
 						<td><a href="view.html?id=${member.id}"><button
 									type="button" class="btn btn-info">View</button></a> <a
 							href="edit.html?id=${member.id}"><button type="button"
-									class="btn btn-warning">Edit</button></a> 
-								<sec:authorize access="hasAuthority('Admin')">
-									<a href="delete.html?memberId=${member.id}">							
-										<button	type="button" class="btn btn-danger">Delete</button>
-									</a>
-								</sec:authorize>
-							</td>
+									class="btn btn-warning">Edit</button></a> <sec:authorize
+								access="hasAuthority('Admin')">
+								<a href="delete.html?memberId=${member.id}">
+									<button type="button" class="btn btn-danger">Delete</button>
+								</a>
+							</sec:authorize></td>
 					</tr>
 				</sec:authorize>
 
@@ -61,10 +60,5 @@
 		</tbody>
 	</table>
 	<br /> &nbsp;&nbsp;
-	<sec:authorize access="hasAuthority('Admin')">
-		<a href="add.html"><button>Add New Member</button></a>
-		<a href="assign.html"><button>Assign Form</button></a>
-	</sec:authorize>
-
 </body>
 </html>

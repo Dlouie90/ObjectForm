@@ -49,9 +49,12 @@
               <directory>/src/main/webapp/WEB-INF</directory>
               <filtering>true</filtering>
               <targetPath>WEB-INF</targetPath>
+              
               <includes>
-                <include>applicationContext.xml</include>                    
-              </includes>
+				    <include>tiles.xml</include>
+				    <inclucd>FormGenerator-servlet.xml</inclucd>
+				    <include>applicationContext.xml</include> 				    
+				  </includes>
             </resource>
           </webResources>
         </configuration>
@@ -116,7 +119,8 @@
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
       <version>3.2.0</version>
-    </dependency>
+    </dependency>    
+    
     <dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-ehcache</artifactId>
@@ -131,6 +135,19 @@
     	<groupId>org.slf4j</groupId>
     	<artifactId>slf4j-log4j12</artifactId>
     	<version>1.7.25</version>
-    </dependency>    
+    </dependency>
+    
+    <!-- Tiles Dependency -->
+	<dependency>
+    <groupId>org.apache.tiles</groupId>
+	    <artifactId>tiles-core</artifactId>
+	    <version>3.0.7</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.tiles</groupId>
+	    <artifactId>tiles-jsp</artifactId>
+	    <version>3.0.7</version>
+	</dependency>
+        
   </dependencies>
 </project>

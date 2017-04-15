@@ -12,7 +12,7 @@
 
 	<form:form modelAttribute="assignForm" class="form-horizontal" method="post">		
 		
-		Select Member: <form:select path="member.id" multiple="true">
+		Select Member: <form:select path="member.id">
 		    <form:options items="${members}" itemLabel="username" itemValue="id"/>
 		</form:select>
 		<br>

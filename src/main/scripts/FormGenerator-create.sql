@@ -262,6 +262,8 @@
         foreign key (owner_Id) 
         references Members;
 
+        
+
 INSERT INTO addresses(id, area, city, country, house, state, street, zip_code)
     VALUES (1, 'Los Angeles', 'Los Angeles', 'United States', '1111', 'CA', 'Fake Street1', '90032');
     

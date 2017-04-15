@@ -3,8 +3,6 @@ package formgenerator.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,10 +23,8 @@ import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.PageDAO;
 
 @Controller
-@SessionAttributes("textbox")
+@SessionAttributes({"textbox","multiplechoice"})
 public class ElementController {
-	
-	private static Logger logger = LoggerFactory.getLogger( ElementController.class );
 	
 	@Autowired
 	private ElementDAO elementDao;
@@ -41,8 +37,6 @@ public class ElementController {
 	private String list(@RequestParam Integer formId,@RequestParam Integer pageId, ModelMap model)
 	{
 		List<FormElement> elements = elementDao.getElements(pageId);
-		
-		logger.info("Received request at element/list.html");
 		
 		model.put("elements", elements);
 		model.addAttribute("pageId", pageId);
@@ -216,10 +210,10 @@ public class ElementController {
 	}
 	
 	@RequestMapping(value="/element/editCheckbox.html",method = RequestMethod.POST)
-	private String editCheckbox( @ModelAttribute MultipleChoice multipleChoice,@RequestParam Integer pageId, @RequestParam Integer formId, @RequestParam Integer elementId, SessionStatus status)
+	private String editCheckbox( @ModelAttribute("multiplechoice") MultipleChoice multiplechoice,@RequestParam Integer pageId, @RequestParam Integer formId, @RequestParam Integer elementId, SessionStatus status)
 	{
 
-		multipleChoice = (MultipleChoice)elementDao.saveElement(multipleChoice);
+		multiplechoice = (MultipleChoice)elementDao.saveElement(multiplechoice);
 		
 		status.setComplete();
 		

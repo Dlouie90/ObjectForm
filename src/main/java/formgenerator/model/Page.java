@@ -13,6 +13,7 @@ package formgenerator.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class Page implements Serializable{
 	@JoinColumn(name="Form_Id")
 	private Form form;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "page_formElements",
     joinColumns=@JoinColumn(name = "page_id"),
     inverseJoinColumns=@JoinColumn(name="formElement_id"))
