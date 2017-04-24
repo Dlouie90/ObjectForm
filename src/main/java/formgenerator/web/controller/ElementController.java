@@ -18,6 +18,7 @@ import formgenerator.model.FormElement;
 import formgenerator.model.MultipleChoice;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
+import formgenerator.model.dao.ChoiceDAO;
 import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.PageDAO;
@@ -25,7 +26,8 @@ import formgenerator.model.dao.PageDAO;
 @Controller
 @SessionAttributes({"textbox","multiplechoice"})
 public class ElementController {
-	
+	@Autowired
+	private ChoiceDAO choiceDao;
 	@Autowired
 	private ElementDAO elementDao;
 	@Autowired
@@ -178,16 +180,15 @@ public class ElementController {
 	}
 	
 	@RequestMapping(value="/element/addCheckbox.html",method = RequestMethod.POST)
-	private String addCheckbox( @ModelAttribute MultipleChoice checkbox,@RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status)
+	private String addCheckbox( @ModelAttribute MultipleChoice changedElement,@RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status)
 	{
 
-		FormElement savedElement = elementDao.saveElement(checkbox);
-		
+		FormElement savedElement = elementDao.saveFormElement(changedElement);
+
 		Page changedPage = pageDao.getPage(pageId);
 		List<FormElement> elements=changedPage.getElements();
 		elements.add(savedElement);
 		changedPage = pageDao.savePage(changedPage);
-		
 		status.setComplete();
 		
 		return "redirect:list.html?formId="+formId+"&pageId="+pageId;
@@ -200,7 +201,10 @@ public class ElementController {
 
 		MultipleChoice multiplechoice = (MultipleChoice)elementDao.getElement(elementId);
 		
+		List<Choice> choices = choiceDao.getChoices(elementId);
+		
 		model.put("multiplechoice", multiplechoice);
+		model.put("choices", choices);
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
 		model.addAttribute("elementId", elementId);
@@ -210,11 +214,11 @@ public class ElementController {
 	}
 	
 	@RequestMapping(value="/element/editCheckbox.html",method = RequestMethod.POST)
-	private String editCheckbox( @ModelAttribute("multiplechoice") MultipleChoice multiplechoice,@RequestParam Integer pageId, @RequestParam Integer formId, @RequestParam Integer elementId, SessionStatus status)
+	private String editCheckbox( @ModelAttribute MultipleChoice changedElement, @RequestParam Integer pageId, @RequestParam Integer formId, @RequestParam Integer elementId, SessionStatus status)
 	{
 
-		multiplechoice = (MultipleChoice)elementDao.saveElement(multiplechoice);
-		
+		elementDao.saveFormElement(changedElement);
+
 		status.setComplete();
 		
 		return "redirect:list.html?formId="+formId+"&pageId="+pageId;

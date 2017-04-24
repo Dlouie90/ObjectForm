@@ -7,9 +7,104 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/form/list.jsp" /> 
 	</definition>
 	
+	<definition name="form/add" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/add.jsp" /> 
+	</definition>
+	
+	<definition name="member/add" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add New Member" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/add.jsp" /> 
+	</definition>
+	
+	<definition name="member/list" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Members List" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/list.jsp" /> 
+	</definition>
+	
+	<definition name="member/view" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Members Information" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/view.jsp" /> 
+	</definition>
+	
+	<definition name="member/edit" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Member Information" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/edit.jsp" /> 
+	</definition>
+	
 	<definition name="member/assign" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Assign Member" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/member/assign.jsp" /> 
+	</definition>
+	
+	<definition name="form/preview" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Preview Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/preview.jsp" /> 
+	</definition>
+	
+	<definition name="form/edit" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/edit.jsp" /> 
+	</definition>
+	
+	<definition name="form/add" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/add.jsp" /> 
+	</definition>
+	
+	<definition name="page/list" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="List of Form's Pages" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/page/list.jsp" /> 
+	</definition>
+	
+	<definition name="page/edit" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Form's Pages" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/page/edit.jsp" /> 
+	</definition>
+	
+	<definition name="page/add" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Create a New Page" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/page/add.jsp" /> 
+	</definition>
+	
+	<definition name="element/list" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="List of Page's Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/list.jsp" /> 
+	</definition>
+	
+	<definition name="element/addCheckbox" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add Checkbox Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/addCheckbox.jsp" /> 
+	</definition>
+	
+	<definition name="element/addTextbox" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add Textbox Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/addTextbox.jsp" /> 
+	</definition>
+	
+	<definition name="element/editTextbox" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Textbox Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/editTextbox.jsp" /> 
+	</definition>
+	
+	<definition name="element/editCheckbox" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Checkbox Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/editCheckbox.jsp" /> 
+	</definition>
+	
+	<definition name="choice/add" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Add Checkbox Choice" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/choice/add.jsp" /> 
+	</definition>
+	
+	<definition name="choice/edit" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Edit Checkbox Choice" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/choice/edit.jsp" /> 
+	</definition>
+	
+	<definition name="choice/list" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="List Checkbox Choice's" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/choice/list.jsp" /> 
 	</definition>
 	  
 </tiles-definitions>

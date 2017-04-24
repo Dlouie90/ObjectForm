@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -32,8 +33,6 @@ public class Member implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@SequenceGenerator(name="member_id_seq",sequenceName="member_id_seq",initialValue = 100,allocationSize=1)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="member_id_seq")
 	@Column(name="Id")
 	private Integer id;
 	
@@ -54,6 +53,9 @@ public class Member implements Serializable{
 	
 	@Column(name="Password", columnDefinition = "varchar(100)")
 	private String password;
+	
+	@Transient
+	private String confirmPasscode;
 	
 	@Column(name="Enabled")
 	private boolean enabled;
@@ -124,5 +126,11 @@ public class Member implements Serializable{
 	}
 	public void setRoles(Role roles) {
 		this.roles = roles;
+	}
+	public String getConfirmPasscode() {
+		return confirmPasscode;
+	}
+	public void setConfirmPasscode(String confirmPasscode) {
+		this.confirmPasscode = confirmPasscode;
 	}	
 }
