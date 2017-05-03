@@ -31,7 +31,7 @@ public class MultipleChoice extends FormElement{
 	@OneToMany(cascade={CascadeType.ALL})
 	private List<Choice> choices;
 	
-  public Integer getNumberOfAllowedSelect() {
+	public Integer getNumberOfAllowedSelect() {
 		return numberOfAllowedSelect;
 	}
 	public void setNumberOfAllowedSelect(Integer numberOfAllowedSelect) {

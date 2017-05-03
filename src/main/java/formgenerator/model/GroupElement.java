@@ -15,15 +15,15 @@ import javax.persistence.ManyToMany;
 
 @Entity
 @DiscriminatorValue("Group")
-public class GroupElement extends FormElement{
-	
+public class GroupElement extends FormElement {
+
 	private static final long serialVersionUID = 1L;
-	
+
+	@Column(name = "group_Id")
+	private int groupId;
+
 	@ManyToMany
 	private List<FormElement> groupFormElements;
-	
-	@Column(name="group_Id")
-	private int groupId;
 
 	public int getGroupId() {
 		return groupId;
@@ -40,5 +40,4 @@ public class GroupElement extends FormElement{
 	public void setGroupFormElements(List<FormElement> groupFormElements) {
 		this.groupFormElements = groupFormElements;
 	}
-
 }

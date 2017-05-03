@@ -23,9 +23,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-
 
 @Entity
 @Table(name="pages")
@@ -52,6 +51,7 @@ public class Page implements Serializable{
 	@JoinTable(name = "page_formElements",
     joinColumns=@JoinColumn(name = "page_id"),
     inverseJoinColumns=@JoinColumn(name="formElement_id"))
+	@OrderBy(value="id")
 	private List<FormElement> elements;
 	
 	public Integer getId() {

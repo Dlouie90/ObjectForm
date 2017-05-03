@@ -35,21 +35,7 @@ $(function(){
 			<div class="col-sm-5">
 				<form:input path="title" type="text" class="form-control" id="elementTitle" placeholder="Enter Element Title" name="elementTitle" />
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Is Required:</label>
-			<div class="col-sm-10">
-				<form:checkbox class="checkbox" path="isRequired" checked="checked"/>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Is Enabled:</label>
-			<div class="col-sm-10">
-				<form:checkbox class="checkbox" path="isEnabled" checked="checked"/>
-			</div>
-		</div>
+		</div>		
 		
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Choices:</label>
@@ -66,13 +52,27 @@ $(function(){
 					</c:forEach>
 				</table>
 			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Is Required:</label>
+			<div class="col-sm-10">
+				<form:checkbox class="checkbox" path="isRequired" checked="checked"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Is Enabled:</label>
+			<div class="col-sm-10">
+				<form:checkbox class="checkbox" path="isEnabled" checked="checked"/>
+			</div>
 		</div>		
 		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<input type="hidden" name="formId" value="${formId} " />
 				<input type="hidden" name="pageId" value="${pageId} " />
-				<input type="submit" name="add" value="Update Element"	class="btn btn-default" id="sbmt">
+				<input type="submit" name="add" value="Update Element"	class="btn btn-primary" id="sbmt">
 			</div>
 		</div>
 	</form:form>

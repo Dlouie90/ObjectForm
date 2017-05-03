@@ -1,24 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=windows-1256" pageEncoding="windows-1256"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<link href="../webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-<tiles:insertAttribute name="title" ignore="true"></tiles:insertAttribute>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
 	<form:form action="list.html" method="post">
 		<input type="hidden" name="pageId" value="${pageId }">
 		<input type="hidden" name="formId" value="${formId }"> 
-    	<select name="elementType">
+    	<select name="elementType" class="selectpicker  form-control show-tick" data-width="auto">
 			<option value="0">Textbox</option>
 			<option value="1">Checkbox</option>
 		</select>
-		<button type="submit" class="btn btn-primary">Add</button>
+		<button type="submit" class="btn btn-primary">Add Me</button>
 	</form:form>
+	<br>
+	<hr>
 	<table class="table">
 		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Title</th>
-				<th>Name</th>
+			<tr>				
+				<th>Title</th>				
 				<th>is Required</th>
 				<th>is Enabled</th>
 				<th>has Multiple Answer</th>
@@ -27,19 +27,14 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${elements}" var="element">
-				<tr>
-					<td>${element.id }</td>
-					<td>${element.title }</td>
-					<td>${element.name }</td>
+				<tr>					
+					<td>${element.title }</td>					
 					<td>${element.isRequired }</td>
 					<td>${element.isEnabled }</td>
 					<td>${element.isMultipleAnswerAllowed}</td>
 					<td>
 			       <c:choose>
-							<c:when test="${element.type =='MultipleChoice' }">
-								<a
-									href="../choice/list.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }"><button
-										type="button" class="btn btn-info">Choices</button></a>
+							<c:when test="${element.type =='MultipleChoice' }">								
 								<a
 									href="editCheckbox.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }"><button
 										type="button" class="btn btn-info">edit</button></a>

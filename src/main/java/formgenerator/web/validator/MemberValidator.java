@@ -29,17 +29,11 @@ public class MemberValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		Member member = (Member) target;
-		
-		if(!StringUtils.hasText(member.getFirstName()))
-			errors.rejectValue("firstName", "error.field.empty");
-		
-		if(!StringUtils.hasText(member.getLastName()))
-			errors.rejectValue("lastName", "error.field.empty");
-		
+						
 		if(!StringUtils.hasText(member.getEmail()))
 			errors.rejectValue("email", "error.field.emailId");
 		
-		if(!member.getPassword().equals(member.getConfirmPasscode()))
+		if(!member.getPassword().equals(member.getConfirmPassword()))
 			errors.rejectValue("password", "error.field.password");
 		
 		if (!(member.getEmail() != null && member.getEmail().isEmpty())) {

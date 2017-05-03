@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<link href="../webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-<tiles:insertAttribute name="body" ignore="true"></tiles:insertAttribute>
+
 <div class="center-block">
 	<c:if test="${empty forms}">
 		<div class="jumbotron">

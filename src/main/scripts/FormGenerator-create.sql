@@ -138,6 +138,16 @@
         primary key (Role_Id)
     );
 
+    create table pdf_files (
+        file_id  serial not null,
+        created_date timestamp,
+        file_content bytea,
+        file_name varchar(255),
+        modified_date timestamp,
+        ownerId int4,
+        primary key (file_id)
+    );
+
     alter table Answer_choices 
         add constraint UK_5pytliwcfpu4s3ackf198rxr4 unique (choiceAnswers_id);
 
@@ -260,4 +270,9 @@
     alter table PDFForm 
         add constraint FK49wbs09vujlgdt9i1yvnirofn 
         foreign key (owner_Id) 
+        references Members;
+
+    alter table pdf_files 
+        add constraint FK7o4r63k0empq2jop6i774c6o 
+        foreign key (ownerId) 
         references Members;

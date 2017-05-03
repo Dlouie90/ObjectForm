@@ -23,6 +23,16 @@
 	        </list>
 	    </property>
 	</bean>
+
+	<!-- Bean for loading error messages -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+    </bean>
+
+    <!-- Bean for handling files uploads and downloads -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="20971520" />
+    </bean>
     
     <!-- This helps in mapping the logical view names to directly view files under a certain pre-configured directory -->    
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

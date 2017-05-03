@@ -24,8 +24,7 @@ public class Textbox extends FormElement{
 	private Integer maxLength;
 	
 	@Column(name = "size")
-	private Integer size;
-	
+	private Integer size;	
 	
 	public String getDefaultValue() {
 		return defaultValue;

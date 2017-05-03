@@ -44,4 +44,5 @@ public class PageDaoImpl implements PageDAO {
 	{
 		 return entityManager.createQuery( "select Page order by id", Page.class ).getResultList();
 	}
+	
 }

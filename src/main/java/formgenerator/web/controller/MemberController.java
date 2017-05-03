@@ -1,6 +1,6 @@
 package formgenerator.web.controller;
 
-import java.util.List;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +23,7 @@ import formgenerator.model.dao.AssignFormDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
 import formgenerator.web.validator.MemberValidator;
+import formgenerator.web.validator.PasswordValidator;
 
 @Controller
 @SessionAttributes("member")
@@ -35,6 +36,9 @@ public class MemberController {
 	private MemberValidator memberValidator;
 	
 	@Autowired
+	private PasswordValidator passwordValidator;
+	
+	@Autowired
 	private FormDAO formDao;
 	
 	@Autowired
@@ -44,23 +48,32 @@ public class MemberController {
 
 	@RequestMapping("/member/list.html")
 	private String list(ModelMap model) {
-		List<Member> members = memberDao.getMembers();
-
-		model.put("members", members);
-		model.addAttribute("menu",
-				"<a style='color: white' href='./list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>");
-
+		
+		model.put("members",  memberDao.getMembers());
 		return "member/list";
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout, ModelMap model) {
+		
+		if (error != null) {
+			model.put("error", "Invalid username and/or password.");
+		}
+
+		if (logout != null) {
+			model.put("msg", "You've been logged out successfully.");
+		}
+		
+		System.out.print("In Login web controller");
+		return "member/login";
+
+	}	
 
 	@RequestMapping(value = "/member/view.html", method = RequestMethod.GET)
 	private String view(@RequestParam Integer id, ModelMap model) {
-		Member member = memberDao.getMember(id);
-
-		model.put("member", member);
-		model.addAttribute("menu",
-				"<a style='color: white' href='./list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>");
-
+		
+		model.put("member", memberDao.getMember(id));
 		return "member/view";
 	}
 
@@ -72,9 +85,7 @@ public class MemberController {
 		Role role = new Role();
 		member.setRoles(role);
 		model.put("member", new Member());
-		model.put("roles", Role.getRoles());
-		model.addAttribute("menu",
-				"<a style='color: white' href='./list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>");
+		model.put("roles", Role.getRoles());		
 
 		return "member/add";
 	}
@@ -86,7 +97,7 @@ public class MemberController {
 		memberValidator.validate(member, bindingResult);
 		
 		if(bindingResult.hasErrors()) 
-			return "member/add"; 
+			return "redirect:member/add.html"; 
 		
 		if(bCryptPasswordEncoder ==null)
 			bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -118,7 +129,7 @@ public class MemberController {
 		if(bindingResult.hasErrors()) 
 			return "member/add"; 
 		
-		if(bCryptPasswordEncoder == null)
+		if(bCryptPasswordEncoder ==null)
 			bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
@@ -158,4 +169,42 @@ public class MemberController {
 		assignFormDao.saveAssigned(assignForm);		
 		return "redirect:list.html";
 	}
+	
+	@RequestMapping(value = "/member/updatepassword.html", method = RequestMethod.GET)	
+	private String updatePassword(ModelMap model, Principal principal) {
+		String username = principal.getName();
+		model.put("member", memberDao.getMemberbyUserName(username));
+		return "member/updatePassword";
+	}
+	
+	@RequestMapping(value = "/member/updatepassword.html", method = RequestMethod.POST)	
+	private String updatePassword(@ModelAttribute Member member, BindingResult bindingResult) {
+		
+		passwordValidator.validate(member, bindingResult);
+		
+		if(bindingResult.hasErrors()) 
+			return "member/updatePassword"; 
+		
+		if(bCryptPasswordEncoder ==null)
+			bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		
+		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+		memberDao.saveMember(member);
+		
+		return "redirect:../form/list.html";
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

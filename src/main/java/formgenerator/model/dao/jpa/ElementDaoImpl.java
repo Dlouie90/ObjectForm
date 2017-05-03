@@ -1,6 +1,5 @@
 package formgenerator.model.dao.jpa;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import formgenerator.model.FormElement;
 import formgenerator.model.MultipleChoice;
-import formgenerator.model.Page;
 import formgenerator.model.dao.ElementDAO;
 
 @Repository
@@ -58,9 +56,7 @@ public class ElementDaoImpl implements ElementDAO {
 		}
 		
 		BeanUtils.copyProperties(element, m);
-
-		entityManager.merge(m);
-		
+		entityManager.merge(m);		
 		return entityManager.merge(element);	
 	}
 

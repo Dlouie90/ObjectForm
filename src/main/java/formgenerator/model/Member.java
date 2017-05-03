@@ -27,7 +27,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name= "Members", uniqueConstraints = { @UniqueConstraint(columnNames = { "Username" }) })
-public class Member implements Serializable{
+public class Member implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -55,8 +55,14 @@ public class Member implements Serializable{
 	private String password;
 	
 	@Transient
-	private String confirmPasscode;
+	private String confirmPassword;
 	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 	@Column(name="Enabled")
 	private boolean enabled;
 	
@@ -127,10 +133,5 @@ public class Member implements Serializable{
 	public void setRoles(Role roles) {
 		this.roles = roles;
 	}
-	public String getConfirmPasscode() {
-		return confirmPasscode;
-	}
-	public void setConfirmPasscode(String confirmPasscode) {
-		this.confirmPasscode = confirmPasscode;
-	}	
+		
 }

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
-<tiles-definitions>  	
+<tiles-definitions>
+
+	<definition name="member/login" template="/WEB-INF/layouts/login-templet.jsp">
+		<put-attribute name="title" value="Login" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" /> 
+	</definition>	
 	
 	<definition name="form/list" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Home" />   
@@ -32,9 +37,19 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/member/edit.jsp" /> 
 	</definition>
 	
+	<definition name="member/updatePassword" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Update Password" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/updatePassword.jsp" /> 
+	</definition>
+	
 	<definition name="member/assign" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Assign Member" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/member/assign.jsp" /> 
+	</definition>
+	
+	<definition name="member/updatePassword" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Update Password" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/member/updatePassword.jsp" /> 
 	</definition>
 	
 	<definition name="form/preview" template="/WEB-INF/layouts/classic-templet.jsp">
@@ -105,6 +120,21 @@
 	<definition name="choice/list" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="List Checkbox Choice's" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/choice/list.jsp" /> 
+	</definition>
+	
+	<definition name="pdffile/list" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="List of PDF Files" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/pdffile/list.jsp" /> 
+	</definition>
+	
+	<definition name="pdffile/upload" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Upload PDF Files" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/pdffile/upload.jsp" /> 
+	</definition>
+	
+	<definition name="pdffile/rename" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Rename PDF File" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/pdffile/rename.jsp" /> 
 	</definition>
 	  
 </tiles-definitions>

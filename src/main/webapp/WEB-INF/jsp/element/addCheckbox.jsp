@@ -34,7 +34,35 @@
 		<div class="form-group">
 			<label for="elementTitle" class="col-sm-2 control-label">Element Title:</label>
 			<div class="col-sm-5">
-				<form:input path="title" type="text" class="form-control" id="elementTitle" placeholder="Enter Element Title" name="elementTitle" />
+				<form:input path="title" type="text" class="form-control" id="elementTitle" placeholder="Enter Element Title" name="elementTitle" required="required" autofocus="autofocus"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="elementTitle" class="col-sm-2 control-label">Element Name:</label>
+			<div class="col-sm-5">
+				<form:input path="name" type="text" class="form-control" id="elementName" placeholder="Enter Element Name" name="elementName" required="required"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Choices:</label>
+			<div class="col-sm-10">
+				<table id="js_choices">
+					<tr class="option" id="tr_tpl">					
+						<td><form:input path="choices[0].text"	cssClass="option_content" required="required"/> 
+							<i class="glyphicon glyphicon-plus add" ></i>
+							<i class="glyphicon glyphicon-trash del dn"></i>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>		
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Is Multiple Answer:</label>
+			<div class="col-sm-10">
+				<form:checkbox class="checkbox" path="isMultipleAnswerAllowed" checked="checked"/>
 			</div>
 		</div>
 		
@@ -50,27 +78,13 @@
 			<div class="col-sm-10">
 				<form:checkbox class="checkbox" path="isEnabled" checked="checked"/>
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Choices:</label>
-			<div class="col-sm-10">
-				<table id="js_choices">
-					<tr class="option" id="tr_tpl">					
-						<td><form:input path="choices[0].text"	cssClass="option_content" /> 
-							<i class="glyphicon glyphicon-plus add" ></i>
-							<i class="glyphicon glyphicon-trash del dn"></i>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>		
+		</div>	
 		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<input type="hidden" name="formId" value="${formId} " />
 				<input type="hidden" name="pageId" value="${pageId} " />
-				<input type="submit" name="add" value="Add Element"	class="btn btn-default" id="sbmt">
+				<input type="submit" name="add" value="Add Check Box"	class="btn btn-primary" id="sbmt">
 			</div>
 		</div>
 	</form:form>
