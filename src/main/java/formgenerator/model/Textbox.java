@@ -44,26 +44,4 @@ public class Textbox extends FormElement{
 	public void setSize(Integer size) {
 		this.size = size;
 	}
-	
-	public String toString()
-	{
-		String s="<table border=0 cellspaccing=5>";
-		s = "<tr><td>"+this.getTitle()+"&nbsp;&nbsp;</td>";
-		s =	s + "<td><Input type='text' name='"+this.getName()+"' ";
-		if (this.getMaxLength() != null) {
-			if (this.getMaxLength()>0) s = s + "maxlength='"+this.getSize()+"' ";
-		}
-		if (this.getSize() != null) {
-			if (this.getSize()>0) s = s + "size='"+this.getSize()+"' ";
-		}
-		if(this.getIsRequired() != null) {
-			if (this.getIsRequired()) s= s + "required";
-		}
-		
-		s = s + "></td></tr></table><br/>";
-		
-		return s;
-		
-	}
-
 }

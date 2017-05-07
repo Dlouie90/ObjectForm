@@ -16,6 +16,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +48,7 @@ public class Page implements Serializable{
 	@JoinColumn(name="Form_Id")
 	private Form form;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinTable(name = "page_formElements",
     joinColumns=@JoinColumn(name = "page_id"),
     inverseJoinColumns=@JoinColumn(name="formElement_id"))
@@ -84,6 +85,4 @@ public class Page implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}	
-	
-	
 }

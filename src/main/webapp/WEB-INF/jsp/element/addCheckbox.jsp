@@ -1,6 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style type="text/css">
+.dn {
+	display:none!important;
+}
 
+td {
+	height: 40px;
+}
+</style>
 <script type="text/javascript">
 	$(function() {
 		var option_tpl;

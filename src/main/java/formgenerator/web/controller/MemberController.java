@@ -1,6 +1,7 @@
 package formgenerator.web.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -113,10 +114,7 @@ public class MemberController {
 	private String edit(@RequestParam Integer id, ModelMap model) {
 		
 		model.put("member", memberDao.getMember(id));
-		model.put("roles", Role.getRoles());
-		model.addAttribute("menu",
-				"<a style='color: white' href='./list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>");
-
+		model.put("roles", Role.getRoles());		
 		return "member/edit";
 	}
 
@@ -153,7 +151,7 @@ public class MemberController {
 		map.put("assignForm", new AssignedForm());
 		
 		map.put("members", memberDao.getMembers());
-		map.put("forms", formDao.getForms());
+		map.put("forms", formDao.findByNamedQuery("assigned.form.by.named.query", new HashMap<String, String>(1)));
 		
 		return "member/assign";
 	}

@@ -20,7 +20,7 @@
 						<tr>
 							<th>Title</th>
 							<th>Created Date</th>
-							<th>Last Modified</th>
+							<th>Published On</th>
 							<th>Created By</th>
 							<th>Actions</th>
 						</tr>
@@ -30,19 +30,28 @@
 							<tr>
 								<td>${form.title}</td>
 								<td>${form.createdDate}</td>
-								<th>${form.modifiedDate}</th>
+								<th>${form.submitDate}</th>
 								<td>${form.ownedBy.username}</td>
-								<td><a href="preview.html?formId=${form.id}"><button
-											type="button" class="btn btn-info">Preview</button></a> <sec:authorize
-										access="hasAuthority('Admin') || hasAuthority('Staff')">
-										<a href="edit.html?id=${form.id}"><button type="button"
-												class="btn btn-primary">Edit</button></a>
-										<a href="delete.html?formId=${form.id}"><button
-												type="button" class="glyphicon glyphicon-trash 
-												                     btn btn-danger">Delete</button></a>
-										<a href="../page/list.html?formId=${form.id}"><button
-												type="button" class="btn btn-warning">Pages</button></a>
-									</sec:authorize></td>
+								<td>
+									<a href="preview.html?formId=${form.id}">
+										<button	type="button" class="btn btn-info">Preview</button>
+									</a>
+									<c:if test="${empty form.submitDate}">
+										<sec:authorize	access="hasAuthority('Admin') || hasAuthority('Staff')">
+											<a href="edit.html?id=${form.id}">
+												<button type="button" class="btn btn-primary">Edit</button>
+											</a>											
+											<a href="../page/list.html?formId=${form.id}">
+												<button	type="button" class="btn btn-warning">Pages</button>
+											</a>
+										</sec:authorize>										
+									</c:if>
+									<sec:authorize	access="hasAuthority('Admin') || hasAuthority('Staff')">
+										<a href="delete.html?formId=${form.id}">
+											<button	type="button" class="glyphicon glyphicon-trash btn btn-danger">Delete</button>
+										</a>
+									</sec:authorize>																	
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

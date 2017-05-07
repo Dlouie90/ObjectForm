@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -92,6 +94,41 @@ public class FormController {
 		return "form/list";
 
 	}
+	
+	@RequestMapping(value = { "/form/publish.html" }, method = RequestMethod.GET)
+	private String publish(ModelMap model, HttpServletRequest request) {
+		
+		Set<Form> forms = formDao.findByNamedQuery("published.form.by.named.query", new HashMap<>(1));
+		model.put("forms", forms);
+		
+		String flag = (String)request.getAttribute("updateFlag");
+		System.out.println("Flag is: "+request.getAttribute("updateFlag"));
+		System.out.println("Flag is: "+model.get("updateFlag"));
+		if(flag != null && flag != ""){
+			model.put("flag", flag);
+			model.put("FormTitle", (String)request.getAttribute("FormTitle"));
+		}
+		System.out.print("Publish Get");
+		return "form/publish";
+	}
+	
+	@RequestMapping(value = { "/form/publish.html" }, method = RequestMethod.POST)
+	private String publish( @RequestParam int formID, ModelMap model) {
+		
+		Form form = formDao.getForm(formID);
+		Date myDate = new Date();
+		form.setSubmitDate(new java.sql.Timestamp(myDate.getTime()));
+		formDao.saveForm(form);		
+		
+		model.put("updateFlag",true);
+		model.put("FormTitle",form.getTitle());
+		Set<Form> forms = formDao.findByNamedQuery("published.form.by.named.query", new HashMap<>(1));
+		model.put("forms", forms);
+		
+		System.out.print("Publish POST");
+		return "form/publish";
+		
+	}
 
 	@RequestMapping(value = { "/form/add.html" }, method = RequestMethod.GET)
 	private String add(ModelMap model) {		
@@ -106,10 +143,9 @@ public class FormController {
 	private String add(@ModelAttribute Form form, @RequestParam int numofpages, Principal principal) {
 		
 		Date myDate = new Date();
-		
 		form.setCreatedDate(new java.sql.Timestamp(myDate.getTime()));
-		form.setOwnedBy(memberDao.getMemberbyUserName(principal.getName()));
-		
+									
+		form.setOwnedBy(memberDao.getMemberbyUserName(principal.getName()));		
 		List<Page> pages = new ArrayList<Page>();
 		for(int i = 1; i <= numofpages; i++) {
 			Page page = new Page();
@@ -117,8 +153,8 @@ public class FormController {
 			page.setForm(form);
 			pages.add(page);
 		}
-		form.setPages(pages);
 		
+		form.setPages(pages);		
 		formDao.saveForm(form);
 
 		return "redirect:list.html";
@@ -136,8 +172,8 @@ public class FormController {
 		
 		Date myDate = new Date();
 		form.setModifiedDate(new java.sql.Timestamp(myDate.getTime()));				
+		
 		formDao.saveForm(form);
-
 		status.setComplete();
 
 		return "redirect:list.html";

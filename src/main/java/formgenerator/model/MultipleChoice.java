@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,7 +29,7 @@ public class MultipleChoice extends FormElement{
 	@Column(name = "multiple_choice_type")
 	private int choiceType;
 	
-	@OneToMany(cascade={CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	private List<Choice> choices;
 	
 	public Integer getNumberOfAllowedSelect() {
@@ -42,19 +43,5 @@ public class MultipleChoice extends FormElement{
 	}
 	public void setChoices(List<Choice> choices) {
 		this.choices = choices;
-	}
-
-	public String toString()
-	{
-		String s="<table border=0 cellspaccing=5>";
-		s = s+"<tr><td>"+this.getTitle()+"</td><tr>";
-		for(Choice c : this.choices)
-		{
-			s = s + "<tr><td><input type='checkbox' name='"+this.getName()+"' value='"+c.getId()+"'>"+c.getText()+"<tr><td>";
-		}
-
-		s = s + "</table><br/>";
-		
-		return s;
-	}
+	}	
 }

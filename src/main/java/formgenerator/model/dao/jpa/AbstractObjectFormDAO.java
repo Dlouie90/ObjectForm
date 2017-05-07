@@ -13,10 +13,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public abstract class AbstractObjectFormDAO<T extends Serializable>  {
 	
 	@PersistenceContext

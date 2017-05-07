@@ -34,7 +34,11 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({	
 	@NamedQuery(name = "assignedform.by.named.query", query = "SELECT f FROM Form f"
-			+ " INNER JOIN f.assigedForm af ON f.id = af.form  WHERE af.member.id = :memberId") 
+			+ " INNER JOIN f.assigedForm af ON f.id = af.form  WHERE af.member.id = :memberId"),
+	@NamedQuery(name = "published.form.by.named.query", query = "SELECT f FROM Form f"
+			+ " WHERE f.submitDate IS NULL"),
+	@NamedQuery(name = "assigned.form.by.named.query", query = "SELECT f FROM Form f"
+			+ " WHERE f.submitDate IS NOT NULL")
 	})
 @Table(name="forms")
 public class Form implements Serializable{
@@ -59,7 +63,7 @@ public class Form implements Serializable{
 	private Date modifiedDate;
 	
 	@Column(name="Submission_Date")
-	private Date submitDate;	
+	private Date submitDate;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="form")
 	@Column(name="Pages")	

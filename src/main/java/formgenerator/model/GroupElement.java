@@ -8,9 +8,11 @@ package formgenerator.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -22,7 +24,7 @@ public class GroupElement extends FormElement {
 	@Column(name = "group_Id")
 	private int groupId;
 
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	private List<FormElement> groupFormElements;
 
 	public int getGroupId() {

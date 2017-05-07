@@ -12,6 +12,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/form/list.jsp" /> 
 	</definition>
 	
+	<definition name="form/publish" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Publish Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/publish.jsp" /> 
+	</definition>
+	
 	<definition name="form/add" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Add Form" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/form/add.jsp" /> 
