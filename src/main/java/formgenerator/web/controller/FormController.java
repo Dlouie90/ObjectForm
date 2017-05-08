@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import formgenerator.model.DateText;
 import formgenerator.model.Form;
 import formgenerator.model.FormElement;
 import formgenerator.model.GroupElement;
@@ -50,14 +51,17 @@ public class FormController {
 	
 	private final ObjectFormDAOI<GroupElement> groupDao;
 	private final ObjectFormDAOI<Textbox> textDao;
+	private final ObjectFormDAOI<DateText> dateDao;
 	private final ObjectFormDAOI<MultipleChoice> multiChoiceDao;
 		
 	@Autowired	
 	public FormController(@Qualifier("GroupElementDAO") final ObjectFormDAOI<GroupElement> dao,
 			@Qualifier("TextboxDAO") final ObjectFormDAOI<Textbox> textdao,
+			@Qualifier("DateTextDAO") final ObjectFormDAOI<DateText> dateDao,
 			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao){
 		this.groupDao = dao;
 		this.textDao = textdao;
+		this.dateDao = dateDao;
 		this.multiChoiceDao = multichoicedao;
 	}
 
@@ -225,6 +229,13 @@ public class FormController {
 				elements.add(ge);								
 			}
 			
+			if(e.getType().equals("DateText")){
+				Map<String, String> params = new HashMap<>();
+				params.put("id", e.getId().toString());
+				DateText ge = dateDao.findByCriteria(params, DateText.class);
+				elements.add(ge);								
+			}
+			
 			if(e.getType().equals("MultipleChoice")){
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
@@ -232,7 +243,6 @@ public class FormController {
 				elements.add(ge);								
 			}			
 		}
-
 		model.put("form", curForm);		
 		model.addAttribute("elements", elements);
 		model.addAttribute("pageLinks", pageLinks);
