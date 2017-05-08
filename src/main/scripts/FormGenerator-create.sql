@@ -18,13 +18,10 @@
         textbox_value varchar(255),
         date_value timestamp,
         formId int4,
+        formElements_id int4,
         memberId int4,
+        choice_id int4,
         primary key (id)
-    );
-
-    create table Answer_choices (
-        MultipleChoiceAnswer_id int4 not null,
-        choiceAnswers_id int4 not null
     );
 
     create table AssignedForms (
@@ -44,6 +41,7 @@
         elementType varchar(31) not null,
         id  serial not null,
         is_enabled boolean,
+        is_in_group boolean,
         is_multiple_answer_allowed boolean,
         is_required boolean,
         name varchar(255),
@@ -59,14 +57,10 @@
         group_Id int4,
         date_format varchar(255),
         default_date timestamp,
+        answer_id int4,
         form_Id int4,
         pdfElement_pdfElement_Id int4,
         primary key (id)
-    );
-
-    create table formElement_answers (
-        answer_id int4 not null,
-        formElement_id int4 not null
     );
 
     create table FormElement_choices (
@@ -117,6 +111,16 @@
         primary key (Page_Id)
     );
 
+    create table pdf_files (
+        file_id  serial not null,
+        created_date timestamp,
+        file_content bytea,
+        file_name varchar(255),
+        modified_date timestamp,
+        ownerId int4,
+        primary key (file_id)
+    );
+
     create table PDFElement (
         pdfElement_Id  serial not null,
         name varchar(255),
@@ -138,19 +142,6 @@
         primary key (Role_Id)
     );
 
-    create table pdf_files (
-        file_id  serial not null,
-        created_date timestamp,
-        file_content bytea,
-        file_name varchar(255),
-        modified_date timestamp,
-        ownerId int4,
-        primary key (file_id)
-    );
-
-    alter table Answer_choices 
-        add constraint UK_5pytliwcfpu4s3ackf198rxr4 unique (choiceAnswers_id);
-
     alter table FormElement_choices 
         add constraint UK_e27wl75sqvy7w9phqms4so4l unique (choices_id);
 
@@ -163,19 +154,19 @@
         references forms;
 
     alter table Answer 
+        add constraint FKm0oekf10gwkpbuboq9n19tf0v 
+        foreign key (formElements_id) 
+        references FormElement;
+
+    alter table Answer 
         add constraint FK32j5552csr2itnpo37g5ht57f 
         foreign key (memberId) 
         references Members;
 
-    alter table Answer_choices 
-        add constraint FK9j0b9drih3acthy5ll4nms74m 
-        foreign key (choiceAnswers_id) 
+    alter table Answer 
+        add constraint FKjev2wje05of7cwxlyhxfl3v0w 
+        foreign key (choice_id) 
         references choices;
-
-    alter table Answer_choices 
-        add constraint FKt1oirg3nqfenxouwed7jv8keu 
-        foreign key (MultipleChoiceAnswer_id) 
-        references Answer;
 
     alter table AssignedForms 
         add constraint FKabtjv10st4ug0gsk5pr9qig0n 
@@ -188,6 +179,11 @@
         references Members;
 
     alter table FormElement 
+        add constraint FKnc3xa1rnm9j6akhoul9pafryu 
+        foreign key (answer_id) 
+        references Answer;
+
+    alter table FormElement 
         add constraint FK7koo28nnw76tn0mi9ao61pqtx 
         foreign key (form_Id) 
         references forms;
@@ -196,16 +192,6 @@
         add constraint FKlf1d6pyyndrmx87qy8tt1p95j 
         foreign key (pdfElement_pdfElement_Id) 
         references PDFElement;
-
-    alter table formElement_answers 
-        add constraint FKqdr9wqcki5m6anpnlqdx5m1pb 
-        foreign key (formElement_id) 
-        references FormElement;
-
-    alter table formElement_answers 
-        add constraint FK9r71yurusbyvv29ljcumj105i 
-        foreign key (answer_id) 
-        references Answer;
 
     alter table FormElement_choices 
         add constraint FK6byatdcdbtuf0p94mhyp4vn2m 
@@ -257,6 +243,11 @@
         foreign key (Form_Id) 
         references forms;
 
+    alter table pdf_files 
+        add constraint FK7o4r63k0empq2jop6i774c6o 
+        foreign key (ownerId) 
+        references Members;
+
     alter table PDFElement 
         add constraint FK4ipq5n6otm49stsj9t3iic6hx 
         foreign key (formElement_id) 
@@ -270,9 +261,4 @@
     alter table PDFForm 
         add constraint FK49wbs09vujlgdt9i1yvnirofn 
         foreign key (owner_Id) 
-        references Members;
-
-    alter table pdf_files 
-        add constraint FK7o4r63k0empq2jop6i774c6o 
-        foreign key (ownerId) 
         references Members;

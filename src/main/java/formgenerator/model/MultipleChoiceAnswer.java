@@ -1,10 +1,9 @@
 package formgenerator.model;
 
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("MultipleChoice")
@@ -12,15 +11,14 @@ public class MultipleChoiceAnswer extends Answer{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@OneToMany
-	private List<Choice> choiceAnswers;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Choice choice;
 
-	public List<Choice> getChoiceAnswers() {
-		return choiceAnswers;
+	public Choice getChoice() {
+		return choice;
 	}
 
-	public void setChoiceAnswers(List<Choice> choiceAnswers) {
-		this.choiceAnswers = choiceAnswers;
+	public void setChoice(Choice choice) {
+		this.choice = choice;
 	}
-
 }
