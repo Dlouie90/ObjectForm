@@ -170,4 +170,12 @@ public abstract class FormElement implements Serializable {
 		this.type = type;
 	}
 
+	public Boolean getIsInGroup() {
+		return isInGroup;
+	}
+
+	public void setIsInGroup(Boolean isInGroup) {
+		this.isInGroup = isInGroup;
+	}
+
 }

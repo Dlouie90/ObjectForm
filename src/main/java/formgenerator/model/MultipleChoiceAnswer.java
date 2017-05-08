@@ -1,6 +1,5 @@
 package formgenerator.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -11,7 +10,7 @@ public class MultipleChoiceAnswer extends Answer{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Choice choice;
 
 	public Choice getChoice() {

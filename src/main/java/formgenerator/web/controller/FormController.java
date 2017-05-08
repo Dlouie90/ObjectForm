@@ -236,6 +236,7 @@ public class FormController {
 		model.put("form", curForm);		
 		model.addAttribute("elements", elements);
 		model.addAttribute("pageLinks", pageLinks);
+		model.put("page", p);
 
 		return "form/preview";
 	}

@@ -282,7 +282,7 @@ INSERT INTO page_formelements (page_id, formelement_id)
 	VALUES (1, 25);
 	
 INSERT INTO Answer(answerType, id, textarea_value, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 1,'','Hopkins,Steven', 1, 1, 1);
+	VALUES('TextBox', 1,'','Hopkins, Steven', 1, 1, 1);
 	
 UPDATE FormElement
 	SET Answer_id = 1 WHERE id = 1;
@@ -306,19 +306,19 @@ UPDATE FormElement
 	SET Answer_id = 4 WHERE id = 4;
 	
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 5,'(606)-432-2223', 1, 1, 6);
+	VALUES('TextBox', 5,'(606) 432-2223', 1, 1, 6);
 	
 UPDATE FormElement
 	SET Answer_id = 5 WHERE id = 6;
 
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 6,'(606)-563-8732', 1, 1, 7);
+	VALUES('TextBox', 6,'(606) 563-8732', 1, 1, 7);
 	
 UPDATE FormElement
 	SET Answer_id = 6 WHERE id = 7;
 
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 7,'(324)-621-6547', 1, 1, 8);
+	VALUES('TextBox', 7,'(324) 621-6547', 1, 1, 8);
 	
 UPDATE FormElement
 	SET Answer_id = 7 WHERE id = 8;
@@ -336,7 +336,7 @@ UPDATE FormElement
 	SET Answer_id = 9 WHERE id = 11;
 
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 10,'Passadena', 1, 1, 12);
+	VALUES('TextBox', 10,'Pasadena', 1, 1, 12);
 	
 UPDATE FormElement
 	SET Answer_id = 10 WHERE id = 12;
@@ -360,19 +360,19 @@ UPDATE FormElement
 	SET Answer_id = 13 WHERE id = 15;
 	
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 14,'Hido Co.', 1, 1, 17);
+	VALUES('TextBox', 14,'Donald Trump Corp.', 1, 1, 17);
 	
 UPDATE FormElement
 	SET Answer_id = 14 WHERE id = 17;
 	
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 15,'22 Fare Oaks', 1, 1, 18);
+	VALUES('TextBox', 15,'2121 Fair Oaks', 1, 1, 18);
 	
 UPDATE FormElement
 	SET Answer_id = 15 WHERE id = 18;
 	
 INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 16,'Passadena', 1, 1, 19);
+	VALUES('TextBox', 16,'Pasadena, California', 1, 1, 19);
 	
 UPDATE FormElement
 	SET Answer_id = 16 WHERE id = 19;
@@ -401,8 +401,11 @@ INSERT INTO Answer(answerType, id, date_value, formId, memberId, formelements_id
 UPDATE FormElement
 	SET Answer_id = 20 WHERE id = 23;
 	
-INSERT INTO Answer(answerType, id, formId, memberId, formelements_id)
-	VALUES('MultipleChoice', 21, 1, 1, 24);
+INSERT INTO Answer(answerType, id, formId, memberId, formelements_id, choice_id)
+	VALUES('MultipleChoice', 21, 1, 1, 24, 1);
+	
+UPDATE choices
+	SET answer_id = 21 WHERE id = 1;
 	
 UPDATE FormElement
 	SET Answer_id = 21 WHERE id = 24;

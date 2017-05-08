@@ -34,6 +34,7 @@
     create table choices (
         id  serial not null,
         text varchar(255),
+        answer_id int4,
         primary key (id)
     );
 
@@ -177,6 +178,11 @@
         add constraint FKhtu4qkcxhwnqh2rhos9f0fu3k 
         foreign key (MEMBER_ID) 
         references Members;
+
+    alter table choices 
+        add constraint FK864sy7kd05xwfgoqa3x5dx02c 
+        foreign key (answer_id) 
+        references Answer;
 
     alter table FormElement 
         add constraint FKnc3xa1rnm9j6akhoul9pafryu 

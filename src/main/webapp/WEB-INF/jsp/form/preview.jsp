@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -27,17 +28,17 @@
 				</div>
 			</c:if>
 			<c:if test="${not empty elements}">
+			<form:form modelAttribute="page" method ="post">
 				<table class="table">
 					<tbody>
-						<c:forEach items="${elements}" var="element">
+						<c:forEach items="${elements}" var="element" varStatus="loop">
 							<c:if test="${element.type == 'GroupElement'}">
 								<th>${element.title}</th>
 								<c:forEach items="${element.groupFormElements}" var="gElement">
 									<c:if test="${gElement.type == 'Textbox'}">
 										<tr>
-											<td>${gElement.title} <input type="text"
-												name="${gElement.name}" maxlength="gElement.maxLength"
-												value="${gElement.answer.value}" /></td>
+											<td>${gElement.title} <form:input path="elements[${loop.index}].answer.value" type="text"
+												name="${gElement.name}" maxlength="gElement.maxLength"/></td>
 										</tr>
 									</c:if>
 									<c:if test="${gElement.type == 'DateText'}">
@@ -59,12 +60,11 @@
 									</c:if>
 								</c:forEach>
 							</c:if>
-							<c:if test="${element.isingroup == false}">
+							<c:if test="${element.isInGroup == false || empty element.isInGroup}">
 								<c:if test="${element.type == 'Textbox'}">
 									<tr>
-										<td>${element.title} <input type="text"
-											name="${element.name}" maxlength="gElement.maxLength"
-											value="${element.answer.value}" /></td>
+										<td>${element.title} <form:input path="elements[${loop.index}].answer.value" type="text"
+												name="${gElement.name}" maxlength="gElement.maxLength"/></td>
 									</tr>
 								</c:if>
 								<c:if test="${element.type == 'DateText'}">
@@ -77,17 +77,28 @@
 									<tr>
 										<td>${element.title} <c:forEach items="${element.choices}"
 												var="choice">
-												<input type="radio" name="${element.name}"
-													value="${choice.text}" class="checkbox"
-													style="display: inline;" />${choice.text}								
+												<c:choose>
+													<c:when test="${not empty choice.answer}">
+														<input type="radio" name="${element.name}"
+														value="${choice.text}" class="checkbox"
+														style="display: inline;" checked="checked" />${choice.text}
+													</c:when>
+													<c:otherwise>
+														<input type="radio" name="${element.name}"
+															value="${choice.text}" class="checkbox"
+															style="display: inline;" />${choice.text}
+													</c:otherwise>
+												</c:choose>								
 											</c:forEach>
 										</td>
 									</tr>
 								</c:if>
 							</c:if>
 						</c:forEach>
+						<input type="submit" name="Save Form" value="Save" class="btn btn-primary btn-lg">
 					</tbody>
 				</table>
+				</form:form>
 			</c:if>
 		</div>
 	</div>
