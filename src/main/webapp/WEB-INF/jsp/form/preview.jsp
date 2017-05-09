@@ -34,11 +34,12 @@
 							<c:forEach items="${elements}" var="element" varStatus="loop">
 								<c:if test="${element.type == 'GroupElement'}">
 									<th>${element.title}</th>
-									<c:forEach items="${element.groupFormElements}" var="gElement">
+									<c:forEach items="${element.groupFormElements}" var="gElement"
+										varStatus="loop2">
 										<c:if test="${gElement.type == 'Textbox'}">
 											<tr>
 												<td>${gElement.title}<form:input
-														path="elements[${loop.index}].answers[0]" type="text"
+														path="elements[${loop2.index}].answers" type="text"
 														name="${gElement.name}" maxlength="gElement.maxLength" /></td>
 											</tr>
 										</c:if>
@@ -66,43 +67,49 @@
 									<c:if test="${element.type == 'Textbox'}">
 										<tr>
 											<td>${element.title}<form:input
-													path="elements[${loop.index}].answers" type="text"
-													name="${gElement.name}" maxlength="gElement.maxLength" /></td>
+													path="elements[${loop.index}].answers[0].value" type="text"
+													name="${element.name}" maxlength="gElement.maxLength" /></td>
 										</tr>
 									</c:if>
 									<c:if test="${element.type == 'DateText'}">
 										<tr>
-											<td>${element.title}<input type="date"
-												name="${element.name}" value="${element.answers}"></td>
+											<td>${element.title}<form:input
+													path="elements[${loop.index}].answers[0].date" type="date"
+													name="${element.name}" /></td>
 										</tr>
 									</c:if>
 									<c:if test="${element.type == 'MultipleChoice'}">
 										<tr>
 											<td>${element.title}<c:forEach
 													items="${element.choices}" var="choice">
-													<c:choose>
-														<c:when test="${not empty element.answers}">
-															<input type="radio" name="${element.name}"
-																value="${choice.text}" class="checkbox"
-																style="display: inline;" checked="checked" />${choice.text}
+													<c:forEach items="${element.answers}" var="answer">
+														<c:forEach items="${answer.choiceAnswers}" var="canswer">
+															<c:choose>
+																<c:when test="${canswer.id == choice.id}">
+																	<form:radiobutton class="checkbox"
+																		style="display: inline;"
+																		path="elements[${loop.index}].answers[0].choiceAnswers[0]"
+																		value="${choice.text}" checked="checked" />${choice.text}
 													</c:when>
-														<c:otherwise>
-															<input type="radio" name="${element.name}"
-																value="${choice.text}" class="checkbox"
-																style="display: inline;" />${choice.text}
+																<c:otherwise>
+																	<form:radiobutton class="checkbox"
+																		style="display: inline;"
+																		path="elements[${loop.index}].answers[0].choiceAnswers[0]"
+																		value="${choice.text}" />${choice.text}
 													</c:otherwise>
-													</c:choose>
+															</c:choose>
+														</c:forEach>
+													</c:forEach>
 												</c:forEach>
 											</td>
 										</tr>
 									</c:if>
 								</c:if>
 							</c:forEach>
-							<!--  
-							<input type="submit" name="Save Form" value="Save"
-								class="btn btn-primary btn-lg"> -->
 						</tbody>
 					</table>
+					<input type="submit" name="Save Form" value="Save"
+								class="btn btn-primary btn-lg">
 				</form:form>
 			</c:if>
 		</div>

@@ -82,6 +82,5 @@
     <bean id="TextboxDAO" class="formgenerator.model.dao.jpa.implementations.TextboxDAO"></bean>
     <bean id="MultipleChoiceDAO" class="formgenerator.model.dao.jpa.implementations.MultipleChoiceDAO"></bean>
     <bean id="DateTextDAO" class="formgenerator.model.dao.jpa.implementations.DateTextDAO"></bean>
-    <bean id="TextboxAnswerDAO" class="formgenerator.model.dao.jpa.implementations.TextboxAnswerDAO"></bean>
 
 </beans>

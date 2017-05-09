@@ -36,6 +36,7 @@ import formgenerator.model.MultipleChoiceAnswer;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
 import formgenerator.model.TextboxAnswer;
+import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
 import formgenerator.model.dao.ObjectFormDAOI;
@@ -54,23 +55,23 @@ public class FormController {
 	@Autowired
 	private MemberDAO memberDao;
 	
+	@Autowired
+	private ElementDAO elementDao;
+	
 	private final ObjectFormDAOI<GroupElement> groupDao;
 	private final ObjectFormDAOI<Textbox> textDao;
 	private final ObjectFormDAOI<DateText> dateDao;
 	private final ObjectFormDAOI<MultipleChoice> multiChoiceDao;
-	private final ObjectFormDAOI<TextboxAnswer> textanswerDao;
 		
 	@Autowired	
 	public FormController(@Qualifier("GroupElementDAO") final ObjectFormDAOI<GroupElement> dao,
 			@Qualifier("TextboxDAO") final ObjectFormDAOI<Textbox> textdao,
 			@Qualifier("DateTextDAO") final ObjectFormDAOI<DateText> datedao,
-			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao,
-			@Qualifier("TextboxAnswerDAO") final ObjectFormDAOI<TextboxAnswer> textanswerdao){
+			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao){
 		this.groupDao = dao;
 		this.textDao = textdao;
 		this.dateDao = datedao;
 		this.multiChoiceDao = multichoicedao;
-		this.textanswerDao = textanswerdao;
 	}
 
 	@RequestMapping(value = { "index.html", "add.html", "edit.html" })
@@ -235,10 +236,7 @@ public class FormController {
 				params.put("id", e.getId().toString());
 				Textbox ge = textDao.findByCriteria(params, Textbox.class);
 				List<Answer> answers = new ArrayList<Answer>();
-				Map<String, String> ansParams = new HashMap<>();
-				ansParams.put("id", ge.getAnswers().get(0).getId().toString());
-				TextboxAnswer textanswer = textanswerDao.findByCriteria(ansParams, TextboxAnswer.class);
-				System.out.println("");
+				TextboxAnswer textanswer = (TextboxAnswer) ge.getAnswers().get(0);
 				answers.add(textanswer);
 				ge.setAnswers(answers);
 				elements.add(ge);								
@@ -277,6 +275,34 @@ public class FormController {
 		model.put("page", p);
 
 		return "form/preview";
+	}
+	
+	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
+	private String preview(@ModelAttribute Page page, SessionStatus status) {
+		System.out.println("Hello World");
+//		List<FormElement> elements = page.getElements();
+//		for (FormElement e : elements) {
+//			
+//			if(e.getType().equals("Textbox")){
+//				Textbox tx = (Textbox) e;
+//				elementDao.saveElement(tx);
+//			}
+//			
+//			if(e.getType().equals("DateText")){
+//				
+//			}
+//			
+//			if(e.getType().equals("GroupElement")){
+//				
+//			}
+//			
+//			if(e.getType().equals("MultipleChoice")){
+//				
+//			}
+//		}
+		
+		//status.setComplete();
+		return "redirect:list.html";
 	}
 
 	@RequestMapping(value = "/form/delete.html", method = RequestMethod.GET)
