@@ -193,7 +193,7 @@ public class FormController {
 	}
 
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.GET)
-	private String preview(ModelMap model, @RequestParam Integer formId, @RequestParam(required = false) Integer fpId) {
+	private String preview(ModelMap model, @RequestParam Integer formId, @RequestParam(required = false) Integer fpId, Principal principal) {
 		if (fpId == null) {
 			fpId = 0;
 		}
@@ -236,8 +236,12 @@ public class FormController {
 				params.put("id", e.getId().toString());
 				Textbox ge = textDao.findByCriteria(params, Textbox.class);
 				List<Answer> answers = new ArrayList<Answer>();
-				TextboxAnswer textanswer = (TextboxAnswer) ge.getAnswers().get(0);
-				answers.add(textanswer);
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						TextboxAnswer textanswer = (TextboxAnswer) a;
+						answers.add(textanswer);
+					}
+				}
 				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
@@ -247,8 +251,12 @@ public class FormController {
 				params.put("id", e.getId().toString());
 				DateText ge = dateDao.findByCriteria(params, DateText.class);
 				List<Answer> answers = new ArrayList<Answer>();
-				DateTextAnswer dateanswer = (DateTextAnswer) ge.getAnswers().get(0);
-				answers.add(dateanswer);
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						DateTextAnswer dateanswer = (DateTextAnswer) a;
+						answers.add(dateanswer);
+					}
+				}
 				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
@@ -258,12 +266,14 @@ public class FormController {
 				params.put("id", e.getId().toString());
 				MultipleChoice ge = multiChoiceDao.findByCriteria(params, MultipleChoice.class);
 				List<Answer> answers = new ArrayList<Answer>();
-				MultipleChoiceAnswer multianswer = (MultipleChoiceAnswer) ge.getAnswers().get(0);
-				List<Choice> choices = new ArrayList<Choice>();
-				Choice choiceanswer = multianswer.getChoiceAnswers().get(0);
-				choices.add(choiceanswer);
-				multianswer.setChoiceAnswers(choices);
-				answers.add(multianswer);
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						MultipleChoiceAnswer multianswer = (MultipleChoiceAnswer) a;
+						List<Choice> choices = multianswer.getChoiceAnswers();
+						multianswer.setChoiceAnswers(choices);
+						answers.add(multianswer);
+					}
+				}
 				ge.setAnswers(answers);
 				elements.add(ge);								
 			}			
@@ -279,29 +289,9 @@ public class FormController {
 	
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
 	private String preview(@ModelAttribute Page page, SessionStatus status) {
-		System.out.println("Hello World");
-//		List<FormElement> elements = page.getElements();
-//		for (FormElement e : elements) {
-//			
-//			if(e.getType().equals("Textbox")){
-//				Textbox tx = (Textbox) e;
-//				elementDao.saveElement(tx);
-//			}
-//			
-//			if(e.getType().equals("DateText")){
-//				
-//			}
-//			
-//			if(e.getType().equals("GroupElement")){
-//				
-//			}
-//			
-//			if(e.getType().equals("MultipleChoice")){
-//				
-//			}
-//		}
-		
-		//status.setComplete();
+		System.out.println("----------------------------------------------POST METHOD WORKING---------------------------------------------");
+		pageDao.savePage(page);
+		status.setComplete();
 		return "redirect:list.html";
 	}
 
