@@ -38,14 +38,14 @@
 										<c:if test="${gElement.type == 'Textbox'}">
 											<tr>
 												<td>${gElement.title}<form:input
-														path="elements[${loop.index}].()textbox)answer.value" type="text"
+														path="elements[${loop.index}].answers[0]" type="text"
 														name="${gElement.name}" maxlength="gElement.maxLength" /></td>
 											</tr>
 										</c:if>
 										<c:if test="${gElement.type == 'DateText'}">
 											<tr>
 												<td>${gElement.title}<input type="date"
-													name="${gElement.name}" value="${gElement.answer.date}"></td>
+													name="${gElement.name}" value="${gElement.answers}"></td>
 											</tr>
 										</c:if>
 										<c:if test="${gElement.type == 'MultipleChoice'}">
@@ -66,14 +66,14 @@
 									<c:if test="${element.type == 'Textbox'}">
 										<tr>
 											<td>${element.title}<form:input
-													path="elements[${loop.index}].answer.value" type="text"
+													path="elements[${loop.index}].answers" type="text"
 													name="${gElement.name}" maxlength="gElement.maxLength" /></td>
 										</tr>
 									</c:if>
 									<c:if test="${element.type == 'DateText'}">
 										<tr>
 											<td>${element.title}<input type="date"
-												name="${element.name}" value="${element.answer.date}"></td>
+												name="${element.name}" value="${element.answers}"></td>
 										</tr>
 									</c:if>
 									<c:if test="${element.type == 'MultipleChoice'}">
@@ -81,7 +81,7 @@
 											<td>${element.title}<c:forEach
 													items="${element.choices}" var="choice">
 													<c:choose>
-														<c:when test="${not empty choice.answer}">
+														<c:when test="${not empty element.answers}">
 															<input type="radio" name="${element.name}"
 																value="${choice.text}" class="checkbox"
 																style="display: inline;" checked="checked" />${choice.text}

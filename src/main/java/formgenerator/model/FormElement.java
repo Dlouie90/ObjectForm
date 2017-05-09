@@ -27,6 +27,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -65,8 +67,9 @@ public abstract class FormElement implements Serializable {
 	@ManyToOne
 	private Form form;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Answer answer;
+	@ManyToMany
+	@JoinTable(name = "formElement_answers", joinColumns = @JoinColumn(name = "formElement_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
+	private List<Answer> answers;
 
 	@Transient
 	@Column(name = "elementType", insertable = false, updatable = false)
@@ -104,14 +107,6 @@ public abstract class FormElement implements Serializable {
 
 	public void setPdfElement(PDFElement pdfElement) {
 		this.pdfElement = pdfElement;
-	}
-
-	public Answer getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(Answer answer) {
-		this.answer = answer;
 	}
 
 	public String getTitle() {
@@ -176,6 +171,14 @@ public abstract class FormElement implements Serializable {
 
 	public void setIsInGroup(Boolean isInGroup) {
 		this.isInGroup = isInGroup;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 }

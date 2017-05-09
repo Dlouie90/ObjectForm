@@ -1,8 +1,10 @@
 package formgenerator.model;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("MultipleChoice")
@@ -10,14 +12,15 @@ public class MultipleChoiceAnswer extends Answer{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne
-	private Choice choice;
+	@OneToMany
+	private List<Choice> choiceAnswers;
 
-	public Choice getChoice() {
-		return choice;
+	public List<Choice> getChoiceAnswers() {
+		return choiceAnswers;
 	}
 
-	public void setChoice(Choice choice) {
-		this.choice = choice;
+	public void setChoiceAnswers(List<Choice> choiceAnswers) {
+		this.choiceAnswers = choiceAnswers;
 	}
+
 }

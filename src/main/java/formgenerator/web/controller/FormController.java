@@ -23,14 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import formgenerator.model.Answer;
+import formgenerator.model.Choice;
 import formgenerator.model.DateText;
+import formgenerator.model.DateTextAnswer;
 import formgenerator.model.Form;
 import formgenerator.model.FormElement;
 import formgenerator.model.GroupElement;
 import formgenerator.model.Member;
 import formgenerator.model.MultipleChoice;
+import formgenerator.model.MultipleChoiceAnswer;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
+import formgenerator.model.TextboxAnswer;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
 import formgenerator.model.dao.ObjectFormDAOI;
@@ -53,16 +58,19 @@ public class FormController {
 	private final ObjectFormDAOI<Textbox> textDao;
 	private final ObjectFormDAOI<DateText> dateDao;
 	private final ObjectFormDAOI<MultipleChoice> multiChoiceDao;
+	private final ObjectFormDAOI<TextboxAnswer> textanswerDao;
 		
 	@Autowired	
 	public FormController(@Qualifier("GroupElementDAO") final ObjectFormDAOI<GroupElement> dao,
 			@Qualifier("TextboxDAO") final ObjectFormDAOI<Textbox> textdao,
-			@Qualifier("DateTextDAO") final ObjectFormDAOI<DateText> dateDao,
-			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao){
+			@Qualifier("DateTextDAO") final ObjectFormDAOI<DateText> datedao,
+			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao,
+			@Qualifier("TextboxAnswerDAO") final ObjectFormDAOI<TextboxAnswer> textanswerdao){
 		this.groupDao = dao;
 		this.textDao = textdao;
-		this.dateDao = dateDao;
+		this.dateDao = datedao;
 		this.multiChoiceDao = multichoicedao;
+		this.textanswerDao = textanswerdao;
 	}
 
 	@RequestMapping(value = { "index.html", "add.html", "edit.html" })
@@ -226,6 +234,13 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				Textbox ge = textDao.findByCriteria(params, Textbox.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				Map<String, String> ansParams = new HashMap<>();
+				ansParams.put("id", ge.getAnswers().get(0).getId().toString());
+				TextboxAnswer textanswer = textanswerDao.findByCriteria(ansParams, TextboxAnswer.class);
+				System.out.println("");
+				answers.add(textanswer);
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -233,6 +248,10 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				DateText ge = dateDao.findByCriteria(params, DateText.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				DateTextAnswer dateanswer = (DateTextAnswer) ge.getAnswers().get(0);
+				answers.add(dateanswer);
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -240,9 +259,18 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				MultipleChoice ge = multiChoiceDao.findByCriteria(params, MultipleChoice.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				MultipleChoiceAnswer multianswer = (MultipleChoiceAnswer) ge.getAnswers().get(0);
+				List<Choice> choices = new ArrayList<Choice>();
+				Choice choiceanswer = multianswer.getChoiceAnswers().get(0);
+				choices.add(choiceanswer);
+				multianswer.setChoiceAnswers(choices);
+				answers.add(multianswer);
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}			
 		}
+		p.setElements(elements);
 		model.put("form", curForm);		
 		model.addAttribute("elements", elements);
 		model.addAttribute("pageLinks", pageLinks);

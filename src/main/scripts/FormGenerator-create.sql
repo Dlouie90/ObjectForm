@@ -18,10 +18,13 @@
         textbox_value varchar(255),
         date_value timestamp,
         formId int4,
-        formElements_id int4,
         memberId int4,
-        choice_id int4,
         primary key (id)
+    );
+
+    create table Answer_choices (
+        MultipleChoiceAnswer_id int4 not null,
+        choiceAnswers_id int4 not null
     );
 
     create table AssignedForms (
@@ -34,7 +37,6 @@
     create table choices (
         id  serial not null,
         text varchar(255),
-        answer_id int4,
         primary key (id)
     );
 
@@ -58,10 +60,14 @@
         group_Id int4,
         date_format varchar(255),
         default_date timestamp,
-        answer_id int4,
         form_Id int4,
         pdfElement_pdfElement_Id int4,
         primary key (id)
+    );
+
+    create table formElement_answers (
+        answer_id int4 not null,
+        formElement_id int4 not null
     );
 
     create table FormElement_choices (
@@ -143,6 +149,9 @@
         primary key (Role_Id)
     );
 
+    alter table Answer_choices 
+        add constraint UK_5pytliwcfpu4s3ackf198rxr4 unique (choiceAnswers_id);
+
     alter table FormElement_choices 
         add constraint UK_e27wl75sqvy7w9phqms4so4l unique (choices_id);
 
@@ -155,19 +164,19 @@
         references forms;
 
     alter table Answer 
-        add constraint FKm0oekf10gwkpbuboq9n19tf0v 
-        foreign key (formElements_id) 
-        references FormElement;
-
-    alter table Answer 
         add constraint FK32j5552csr2itnpo37g5ht57f 
         foreign key (memberId) 
         references Members;
 
-    alter table Answer 
-        add constraint FKjev2wje05of7cwxlyhxfl3v0w 
-        foreign key (choice_id) 
+    alter table Answer_choices 
+        add constraint FK9j0b9drih3acthy5ll4nms74m 
+        foreign key (choiceAnswers_id) 
         references choices;
+
+    alter table Answer_choices 
+        add constraint FKt1oirg3nqfenxouwed7jv8keu 
+        foreign key (MultipleChoiceAnswer_id) 
+        references Answer;
 
     alter table AssignedForms 
         add constraint FKabtjv10st4ug0gsk5pr9qig0n 
@@ -179,16 +188,6 @@
         foreign key (MEMBER_ID) 
         references Members;
 
-    alter table choices 
-        add constraint FK864sy7kd05xwfgoqa3x5dx02c 
-        foreign key (answer_id) 
-        references Answer;
-
-    alter table FormElement 
-        add constraint FKnc3xa1rnm9j6akhoul9pafryu 
-        foreign key (answer_id) 
-        references Answer;
-
     alter table FormElement 
         add constraint FK7koo28nnw76tn0mi9ao61pqtx 
         foreign key (form_Id) 
@@ -198,6 +197,16 @@
         add constraint FKlf1d6pyyndrmx87qy8tt1p95j 
         foreign key (pdfElement_pdfElement_Id) 
         references PDFElement;
+
+    alter table formElement_answers 
+        add constraint FKqdr9wqcki5m6anpnlqdx5m1pb 
+        foreign key (formElement_id) 
+        references FormElement;
+
+    alter table formElement_answers 
+        add constraint FK9r71yurusbyvv29ljcumj105i 
+        foreign key (answer_id) 
+        references Answer;
 
     alter table FormElement_choices 
         add constraint FK6byatdcdbtuf0p94mhyp4vn2m 

@@ -1,6 +1,8 @@
 package formgenerator.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -12,8 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 
 //using table per concrete class inheritance strategy
@@ -43,8 +46,11 @@ public abstract class Answer implements Serializable{
 	@JoinColumn(name = "formId")
 	private Form form;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private FormElement formElements;
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name = "formElement_answers",
+		    joinColumns=@JoinColumn(name = "answer_id"),
+		    inverseJoinColumns=@JoinColumn(name="formElement_id"))
+	private List<FormElement> formElements;
 	
 	public Integer getId() {
 		return id;
@@ -58,10 +64,10 @@ public abstract class Answer implements Serializable{
 	public void setUser(Member user) {
 		this.user = user;
 	}
-	public FormElement getFormElements() {
+	public List<FormElement> getFormElements() {
 		return formElements;
 	}
-	public void setFormElements(FormElement formElements) {
+	public void setFormElements(List<FormElement> formElements) {
 		this.formElements = formElements;
 	}
 	

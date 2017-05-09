@@ -281,140 +281,140 @@ INSERT INTO page_formelements (page_id, formelement_id)
 INSERT INTO page_formelements (page_id, formelement_id) 
 	VALUES (1, 25);
 	
-INSERT INTO Answer(answerType, id, textarea_value, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 1,'','Hopkins, Steven', 1, 1, 1);
+INSERT INTO Answer(answerType, id, textarea_value, textbox_value ,formId, memberId)
+	VALUES('TextBox', 1,'','Hopkins, Steven', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 1 WHERE id = 1;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(1, 1);
 
-INSERT INTO Answer(answerType, id, date_value, formId, memberId, formelements_id)
-	VALUES('TextDateA', 2,'09/23/1985', 1, 1, 2);
+INSERT INTO Answer(answerType, id, date_value, formId, memberId)
+	VALUES('TextDateA', 2,'09/23/1985', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 2 WHERE id = 2;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(2, 2);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 3,'Los Angeles, United States', 1, 1, 3);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 3,'Los Angeles, United States', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 3 WHERE id = 3;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(3, 3);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 4,'American', 1, 1, 4);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 4,'American', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 4 WHERE id = 4;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(4, 4);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 5,'(606) 432-2223', 1, 1, 6);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 5,'(606) 432-2223', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 5 WHERE id = 6;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(6, 5);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 6,'(606) 563-8732', 1, 1, 7);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 6,'(606) 563-8732', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 6 WHERE id = 7;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(7, 6);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 7,'(324) 621-6547', 1, 1, 8);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 7,'(324) 621-6547', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 7 WHERE id = 8;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(8, 7);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 8,'steven12@yahoo.com', 1, 1, 9);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 8,'steven12@yahoo.com', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 8 WHERE id = 9;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(9, 8);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 9,'1212 Fair Oaks', 1, 1, 11);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 9,'1212 Fair Oaks', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 9 WHERE id = 11;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(11, 9);
 
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 10,'Pasadena', 1, 1, 12);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 10,'Pasadena', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 10 WHERE id = 12;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(12, 10);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 11,'California', 1, 1, 13);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 11,'California', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 11 WHERE id = 13;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(13, 11);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 12,'90122', 1, 1, 14);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 12,'90122', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 12 WHERE id = 14;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(14, 12);	
 			
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 13, 'United States', 1, 1, 15);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 13, 'United States', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 13 WHERE id = 15;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(15, 13);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 14,'Donald Trump Corp.', 1, 1, 17);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 14,'Donald Trump Corp.', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 14 WHERE id = 17;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(17, 14);	
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 15,'2121 Fair Oaks', 1, 1, 18);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 15,'2121 Fair Oaks', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 15 WHERE id = 18;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(18, 15);
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 16,'Pasadena, California', 1, 1, 19);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 16,'Pasadena, California', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 16 WHERE id = 19;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(19, 16);	
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 17,'90101', 1, 1, 20);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 17,'90101', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 17 WHERE id = 20;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(20, 17);	
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 18,'Software Engineer', 1, 1, 21);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 18,'Software Engineer', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 18 WHERE id = 21;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(21, 18);
 	
-INSERT INTO Answer(answerType, id, date_value, formId, memberId, formelements_id)
-	VALUES('TextDateA', 19,'01/01/2015', 1, 1, 22);
+INSERT INTO Answer(answerType, id, date_value, formId, memberId)
+	VALUES('TextDateA', 19,'01/01/2015', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 19 WHERE id = 22;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(22, 19);	
 	
-INSERT INTO Answer(answerType, id, date_value, formId, memberId, formelements_id)
-	VALUES('TextDateA', 20,'01/12/2016', 1, 1, 23);
+INSERT INTO Answer(answerType, id, date_value, formId, memberId)
+	VALUES('TextDateA', 20,'01/12/2016', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 20 WHERE id = 23;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(23, 20);
 	
-INSERT INTO Answer(answerType, id, formId, memberId, formelements_id, choice_id)
-	VALUES('MultipleChoice', 21, 1, 1, 24, 1);
+INSERT INTO Answer(answerType, id, formId, memberId)
+	VALUES('MultipleChoice', 21, 1, 1);
 	
-UPDATE choices
-	SET answer_id = 21 WHERE id = 1;
+INSERT INTO Answer_choices(MultipleChoiceAnswer_id, choiceAnswers_id)
+	VALUES(21, 2);
 	
-UPDATE FormElement
-	SET Answer_id = 21 WHERE id = 24;
+INSERT INTO formElement_answers(formElement_id, answer_id)
+	VALUES(24, 21);	
 	
-INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId, formelements_id)
-	VALUES('TextBox', 22, 'One', 1, 1, 25);
+INSERT INTO Answer(answerType, id, textbox_value ,formId, memberId)
+	VALUES('TextBox', 22, 'One', 1, 1);
 	
-UPDATE FormElement
-	SET Answer_id = 22 WHERE id = 25;
+INSERT INTO formElement_answers(formElement_id,answer_id)
+	VALUES(25, 22);
 	
 ALTER SEQUENCE addresses_id_seq 
 	RESTART WITH 4;

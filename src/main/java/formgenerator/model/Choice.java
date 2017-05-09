@@ -2,12 +2,10 @@ package formgenerator.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +20,6 @@ public class Choice implements Serializable{
 	
 	private String text;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private MultipleChoiceAnswer answer;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -36,11 +31,5 @@ public class Choice implements Serializable{
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public MultipleChoiceAnswer getAnswer() {
-		return answer;
-	}
-	public void setAnswer(MultipleChoiceAnswer answer) {
-		this.answer = answer;
 	}
 }
