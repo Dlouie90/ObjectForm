@@ -61,6 +61,12 @@ public abstract class FormElement implements Serializable {
 
 	@Column(name = "is_multiple_answer_allowed")
 	private Boolean isMultipleAnswerAllowed;
+	
+	@Column(name = "order_id")
+	private int orderId;
+	
+	@Column(name = "is_in_group")
+	private boolean isInGroup;
 
 	@ManyToOne
 	private Form form;
@@ -182,4 +188,20 @@ public abstract class FormElement implements Serializable {
 		this.type = type;
 	}
 
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public boolean getIsInGroup() {
+		return isInGroup;
+	}
+
+	public void setInGroup(boolean isInGroup) {
+		this.isInGroup = isInGroup;
+	}
+	
 }
