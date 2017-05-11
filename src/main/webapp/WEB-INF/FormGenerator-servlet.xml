@@ -14,6 +14,9 @@
     <mvc:default-servlet-handler/>
     <context:component-scan base-package="formgenerator.web" />
     
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />    
+        
     <!-- This helps in mapping the template with content -->
     <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
     <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">

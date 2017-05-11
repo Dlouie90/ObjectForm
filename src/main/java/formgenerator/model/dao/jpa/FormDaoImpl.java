@@ -1,5 +1,6 @@
 package formgenerator.model.dao.jpa;
 
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import formgenerator.model.FileUploadForm;
 import formgenerator.model.Form;
 import formgenerator.model.dao.FormDAO;
 
@@ -60,5 +62,28 @@ public class FormDaoImpl implements FormDAO {
 
 		Set<Form> results = new HashSet<>(query.getResultList());		
 		return results;
+	}
+
+	@Override
+	@Transactional
+	public FileUploadForm saveFormFile(FileUploadForm formFile){		
+
+		return entityManager.merge(formFile);
+		
+	}
+
+	@Override
+	public FileUploadForm getFormFile(Integer fileId){
+		return entityManager.find(FileUploadForm.class,fileId);
+	}
+	
+	@Override
+	public FileUploadForm getFormFile(Integer formId, Integer userId){
+		List<FileUploadForm> list = entityManager.createQuery( "from FileUploadForm where form.id = " + formId + " and owner.id = " + userId, FileUploadForm.class ).getResultList();
+		FileUploadForm file = null;
+		if(list.size() > 0){
+			file = list.get(0);
+		}
+		return file;
 	}
 }

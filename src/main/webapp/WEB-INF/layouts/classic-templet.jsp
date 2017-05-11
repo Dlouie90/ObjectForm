@@ -10,6 +10,9 @@
 		<script type="text/javascript" src="<c:url value="/webjars/bootstrap/3.2.0/js/bootstrap.min.js" />"></script>
 		<link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.2.0/css/bootstrap.css" />">			
 		<title><tiles:getAsString name="title"/></title>
+		<style>
+			.trash { color:rgb(209, 91, 71); }			
+		</style>
 	</head>
 	<body>
 		<tiles:insertAttribute name="menu" defaultValue="/WEB-INF/layouts/menu.jsp" defaultValueType="template" />

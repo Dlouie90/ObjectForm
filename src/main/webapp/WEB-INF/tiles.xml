@@ -62,6 +62,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/form/preview.jsp" /> 
 	</definition>
 	
+	<definition name="form/formsheet" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="Filling Form" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/form/formsheet.jsp" />
+	</definition>
+	
 	<definition name="form/edit" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Edit Form" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/form/edit.jsp" /> 
@@ -110,6 +115,16 @@
 	<definition name="element/editCheckbox" template="/WEB-INF/layouts/classic-templet.jsp">
 		<put-attribute name="title" value="Edit Checkbox Element" />   
 		<put-attribute name="body" value="/WEB-INF/jsp/element/editCheckbox.jsp" /> 
+	</definition>
+	
+	<definition name="element/addFileUpload" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="File Upload Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/addFileUpload.jsp" /> 
+	</definition>
+	
+	<definition name="element/editFileUpload" template="/WEB-INF/layouts/classic-templet.jsp">
+		<put-attribute name="title" value="File Upload Element" />   
+		<put-attribute name="body" value="/WEB-INF/jsp/element/editFileUpload.jsp" />
 	</definition>
 	
 	<definition name="choice/add" template="/WEB-INF/layouts/classic-templet.jsp">

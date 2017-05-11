@@ -40,6 +40,17 @@
         primary key (id)
     );
 
+    create table FileUploadForm (
+        file_id  serial not null,
+        created_date timestamp,
+        file_content bytea,
+        file_name varchar(255),
+        modified_date timestamp,
+        id int4,
+        owner_id int4,
+        primary key (file_id)
+    );
+
     create table FormElement (
         elementType varchar(31) not null,
         id  serial not null,
@@ -53,6 +64,8 @@
         max_length int4,
         min_length int4,
         row_value int4,
+        fileLength int4,
+        fileType varchar(255),
         multiple_choice_type int4,
         number_of_allowed_select int4,
         size int4,
@@ -72,6 +85,11 @@
     create table FormElement_choices (
         MultipleChoice_id int4 not null,
         choices_id int4 not null
+    );
+
+    create table FormElement_FileUploadForm (
+        FormElement_id int4 not null,
+        fileUploadForm_file_id int4 not null
     );
 
     create table FormElement_FormElement (
@@ -117,6 +135,16 @@
         primary key (Page_Id)
     );
 
+    create table pdf_files (
+        file_id  serial not null,
+        created_date timestamp,
+        file_content bytea,
+        file_name varchar(255),
+        modified_date timestamp,
+        ownerId int4,
+        primary key (file_id)
+    );
+
     create table PDFElement (
         pdfElement_Id  serial not null,
         name varchar(255),
@@ -138,21 +166,14 @@
         primary key (Role_Id)
     );
 
-    create table pdf_files (
-        file_id  serial not null,
-        created_date timestamp,
-        file_content bytea,
-        file_name varchar(255),
-        modified_date timestamp,
-        ownerId int4,
-        primary key (file_id)
-    );
-
     alter table Answer_choices 
         add constraint UK_5pytliwcfpu4s3ackf198rxr4 unique (choiceAnswers_id);
 
     alter table FormElement_choices 
         add constraint UK_e27wl75sqvy7w9phqms4so4l unique (choices_id);
+
+    alter table FormElement_FileUploadForm 
+        add constraint UK_fnwci2mhlm6lji9n3r4j3j9ao unique (fileUploadForm_file_id);
 
     alter table Members 
         add constraint UK_ctwhq1mhwjtrsvpl0kp2iqhw unique (Username);
@@ -187,6 +208,16 @@
         foreign key (MEMBER_ID) 
         references Members;
 
+    alter table FileUploadForm 
+        add constraint FKjvd5w1ov5jsi1u4o4823kp80j 
+        foreign key (id) 
+        references FormElement;
+
+    alter table FileUploadForm 
+        add constraint FKanih9kf4giu7tggaioyquw6r9 
+        foreign key (owner_id) 
+        references Members;
+
     alter table FormElement 
         add constraint FK7koo28nnw76tn0mi9ao61pqtx 
         foreign key (form_Id) 
@@ -215,6 +246,16 @@
     alter table FormElement_choices 
         add constraint FKmrir97g7bblth4wcfxios49of 
         foreign key (MultipleChoice_id) 
+        references FormElement;
+
+    alter table FormElement_FileUploadForm 
+        add constraint FKeywfex78i48eukxlc88dxy0h0 
+        foreign key (fileUploadForm_file_id) 
+        references FileUploadForm;
+
+    alter table FormElement_FileUploadForm 
+        add constraint FK75bud2uao3vlwwco9fllfx307 
+        foreign key (FormElement_id) 
         references FormElement;
 
     alter table FormElement_FormElement 
@@ -257,6 +298,11 @@
         foreign key (Form_Id) 
         references forms;
 
+    alter table pdf_files 
+        add constraint FK7o4r63k0empq2jop6i774c6o 
+        foreign key (ownerId) 
+        references Members;
+
     alter table PDFElement 
         add constraint FK4ipq5n6otm49stsj9t3iic6hx 
         foreign key (formElement_id) 
@@ -270,9 +316,4 @@
     alter table PDFForm 
         add constraint FK49wbs09vujlgdt9i1yvnirofn 
         foreign key (owner_Id) 
-        references Members;
-
-    alter table pdf_files 
-        add constraint FK7o4r63k0empq2jop6i774c6o 
-        foreign key (ownerId) 
         references Members;

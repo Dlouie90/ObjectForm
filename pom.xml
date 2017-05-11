@@ -148,11 +148,18 @@
 	    <artifactId>tiles-jsp</artifactId>
 	    <version>3.0.7</version>
 	</dependency>
-        <!-- dependencies for file uploads -->
+        
+    <!-- dependencies for file uploads -->
     <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.3.2</version>
-    </dependency>
+     	<groupId>commons-fileupload</groupId>
+      	<artifactId>commons-fileupload</artifactId>
+      	<version>1.3.2</version>
+    </dependency>	
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>1.3.2</version>
+	</dependency>
+    
   </dependencies>
 </project>

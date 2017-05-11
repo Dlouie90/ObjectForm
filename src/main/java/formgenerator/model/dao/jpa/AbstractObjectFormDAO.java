@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public abstract class AbstractObjectFormDAO<T extends Serializable>  {
@@ -32,5 +33,10 @@ public abstract class AbstractObjectFormDAO<T extends Serializable>  {
 		T result = em.createQuery(q).getSingleResult();		
 
 		return result;
+	}
+	
+	@Transactional
+	public void update(T entity) {		
+		em.merge(entity);	
 	}
 }

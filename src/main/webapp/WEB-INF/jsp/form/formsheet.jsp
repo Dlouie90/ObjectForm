@@ -3,7 +3,6 @@
 
 <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="<c:url value="/js/jquery.iframe-transport.js" />"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script>
@@ -17,7 +16,7 @@
 <div class="center-block">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h2>${form.title} - Preview</h2>
+			<h2>${form.title}</h2>
 		</div>
 		
 		<div class="form-group">			
@@ -30,7 +29,7 @@
 					</ul>	  
 				</div>
 			</div>
-		</div>
+		</div>	
 		
 		<div class="panel-body">
 			<c:if test="${empty elements}">
@@ -108,7 +107,25 @@
 							</c:if>									
 						</c:forEach>
 					</tbody>
-				</table>				
+				</table>
+				<div class="form-group" style="display: inline-block;">
+					<div class="col-sm-offset-2 col-sm-10">							
+						<a href="">
+							<button class="btn btn-success" >
+								<span class="glyphicon glyphicon-star"></span> Submit This!
+							</button>
+						</a>
+					</div>
+				</div>
+				<div class="form-group" style="display: inline-block;">
+					<div class="col-sm-offset-2 col-sm-10">							
+						<a href="">
+							<button class="btn btn-danger" >
+								Reset Me
+							</button>
+						</a>
+					</div>
+				</div>			
 			</c:if>
 		</div>
 	</div>

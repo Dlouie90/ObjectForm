@@ -25,9 +25,7 @@ public class Role implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@SequenceGenerator(name="role_id_seq",sequenceName="role_id_seq",initialValue = 100,allocationSize=1)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="role_id_seq")	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)  
 	@Column(name="Role_Id")
 	private Integer id;
 	
@@ -45,7 +43,7 @@ public class Role implements Serializable{
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.replace(",", "");
 	}
 	
 	public static Map<String, String> getRoles(){

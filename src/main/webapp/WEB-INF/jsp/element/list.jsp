@@ -10,6 +10,7 @@
     	<select name="elementType" class="selectpicker  form-control show-tick" data-width="auto">
 			<option value="0">Textbox</option>
 			<option value="1">Checkbox</option>
+			<option value="2">File Upload</option>
 		</select>
 		<button type="submit" class="btn btn-primary">Add Me</button>
 	</form:form>
@@ -18,10 +19,9 @@
 	<table class="table">
 		<thead>
 			<tr>				
-				<th>Title</th>				
-				<th>is Required</th>
-				<th>is Enabled</th>
-				<th>has Multiple Answer</th>
+				<th>Question</th>
+				<th>Type</th>
+				<th>is Enabled</th>							
 				<th>Manage</th>
 			</tr>
 		</thead>
@@ -29,27 +29,45 @@
 			<c:forEach items="${elements}" var="element">
 				<tr>					
 					<td>${element.title }</td>					
-					<td>${element.isRequired }</td>
+					<td>${element.type}</td>
 					<td>${element.isEnabled }</td>
-					<td>${element.isMultipleAnswerAllowed}</td>
-					<td>
-			       <c:choose>
-							<c:when test="${element.type =='MultipleChoice' }">								
-								<a
-									href="editCheckbox.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }"><button
-										type="button" class="btn btn-info">edit</button></a>
-							</c:when>
-							<c:when test="${element.type =='Textbox' }">
-								<a
-									href="editTextbox.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }"><button
-										type="button" class="btn btn-info">edit</button></a>
-							</c:when>
-							<c:when test="${element.type =='DateText' }">
-								<a href="edit.html"><button type="button"
-										class="btn btn-warning">edit</button></a>
-							</c:when>
-						</c:choose> <a href="delete.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }"><button
-								type="button" class="btn btn-danger">delete</button></a> 
+					<td>					
+				       <c:choose>
+				       
+								<c:when test="${element.type =='MultipleChoice' }">								
+									<a href="editCheckbox.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }">
+										<button	type="button" class="btn btn-default btn-lg">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</a>
+								</c:when>
+								<c:when test="${element.type =='Textbox' }">
+									<a href="editTextbox.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }">
+										<button	type="button" class="btn btn-default btn-lg">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</a>
+								</c:when>
+								<c:when test="${element.type =='DateText' }">
+									<a href="edit.html">
+										<button	type="button" class="btn btn-default btn-lg">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</a>
+								</c:when>
+								<c:when test="${element.type =='FormFile' }">
+									<a href="editFileUpload.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }">
+										<button	type="button" class="btn btn-default btn-lg">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</a>
+								</c:when>
+							</c:choose> 
+							<a href="delete.html?elementId=${element.id}&formId=${formId }&pageId=${pageId }" class="trash">
+								<button	type="button" class="btn btn-default btn-lg">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>							
+							</a> 
 					</td>
 				</tr>
 			</c:forEach>

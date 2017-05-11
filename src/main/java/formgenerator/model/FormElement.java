@@ -31,6 +31,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -63,7 +64,10 @@ public abstract class FormElement implements Serializable {
 
 	@ManyToOne
 	private Form form;
-
+	
+	@OneToMany
+	private List<FileUploadForm> fileUploadForm;
+	
 	@ManyToMany
 	@JoinTable(name = "formElement_answers", joinColumns = @JoinColumn(name = "formElement_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private List<Answer> answers;
@@ -77,6 +81,14 @@ public abstract class FormElement implements Serializable {
 
 	@OneToOne
 	private PDFElement pdfElement;
+	
+	public List<FileUploadForm> getFileUploadForm() {
+		return fileUploadForm;
+	}
+
+	public void setFileUploadForm(List<FileUploadForm> fileUploadForm) {
+		this.fileUploadForm = fileUploadForm;
+	}
 	
 	public FormElement() {
 		this.setType(this.getClass().getSimpleName());

@@ -1,9 +1,12 @@
 package formgenerator.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,63 +18,124 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import formgenerator.model.Choice;
 import formgenerator.model.FormElement;
+import formgenerator.model.FormFile;
 import formgenerator.model.MultipleChoice;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
 import formgenerator.model.dao.ChoiceDAO;
 import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
+import formgenerator.model.dao.ObjectFormDAOI;
 import formgenerator.model.dao.PageDAO;
 
 @Controller
-@SessionAttributes({"textbox","multiplechoice"})
+@SessionAttributes({"textbox", "multiplechoice", "formFile"})
 public class ElementController {
+	
 	@Autowired
 	private ChoiceDAO choiceDao;
+	
 	@Autowired
 	private ElementDAO elementDao;
+	
 	@Autowired
 	private FormDAO formDao;
+	
 	@Autowired
 	private PageDAO pageDao;
 	
+	private final ObjectFormDAOI<FormFile> formfileDao;
+	
+	@Autowired
+	public ElementController(@Qualifier("FormFileUpload") final ObjectFormDAOI<FormFile> dao){
+		this.formfileDao = dao;		
+	}
+	
 	@RequestMapping(value="element/list.html",method = RequestMethod.GET)
-	private String list(@RequestParam Integer formId,@RequestParam Integer pageId, ModelMap model)
-	{
+	private String list(@RequestParam Integer formId,@RequestParam Integer pageId, ModelMap model){
+		
 		List<FormElement> elements = elementDao.getElements(pageId);
 		
 		model.put("elements", elements);
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"'>Elements</a>");
 		
 		return "element/list";
 		
 	}
 	
 	@RequestMapping(value="element/list.html",method = RequestMethod.POST)
-	private String list(@RequestParam Integer elementType,@RequestParam Integer pageId,@RequestParam Integer formId)
-	{
+	private String list(@RequestParam Integer elementType,@RequestParam Integer pageId,@RequestParam Integer formId){
 		
-		if (elementType==0)
+		if (elementType==0){
 			return "redirect:addTextbox.html?pageId="+pageId+"&formId="+formId;
-		else
+		}			
+		else if(elementType==1){
 			return "redirect:addCheckbox.html?pageId="+pageId+"&formId="+formId;
-		
+		}else{
+			return "redirect:addFileUpload.html?pageId="+pageId+"&formId="+formId;
+		}	
 	}
-	/*
-	@RequestMapping(value="element/addTextbox.html",method = RequestMethod.POST)
-	private String addTextbox( @ModelAttribute Textbox textbox, SessionStatus status, BindingResult result)
-	{
-		
-		//FormElement element = elementDao.saveElement(textbox);
-		
-		//status.setComplete();
-		
-		return "redirect:list.html";	
-	}
-	*/
 	
+	@RequestMapping(value="element/addFileUpload.html",method = RequestMethod.GET)
+	private String addFileUpload(@RequestParam Integer formId, @RequestParam Integer pageId, ModelMap map){		
+		
+		FormFile file =new FormFile();
+		
+		List<String> types = new ArrayList<String>(1);
+		types.add("PDF");
+		
+		map.put("formId", formId);
+		map.put("pageId", pageId);
+		map.put("formFile", file);
+		map.put("types", types);
+		return "element/addFileUpload";	
+	}
+	
+	@RequestMapping(value="element/addFileUpload.html",method = RequestMethod.POST)
+	private String addFileUpload( @ModelAttribute FormFile formFile, @RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status){
+		
+		formFile.setForm(formDao.getForm(formId));
+		FormElement savedElement = elementDao.saveElement(formFile);
+		
+		Page changedPage = pageDao.getPage(pageId);
+		List<FormElement> elements=changedPage.getElements();
+		elements.add(savedElement);
+		changedPage = pageDao.savePage(changedPage);
+		
+		status.setComplete();
+		
+		return "redirect:list.html?formId="+formId+"&pageId="+pageId;				
+	}
+	
+	@RequestMapping(value="element/editFileUpload.html",method = RequestMethod.GET)
+	private String editFileUpload(@RequestParam Integer elementId, @RequestParam Integer formId, @RequestParam Integer pageId, ModelMap map){		
+		
+		Map<String, String> param = new HashMap<>(1);
+		param.put("id", elementId.toString());
+		FormFile curElement = formfileDao.findByCriteria(param, FormFile.class);
+		
+		List<String> types = new ArrayList<String>(1);		
+		types.add("PDF");
+		
+		map.put("formFile", curElement);
+		map.addAttribute("pageId", pageId);
+		map.addAttribute("formId", formId);
+		map.put("types", types);
+		
+		return "element/editFileUpload";	
+	}
+	
+	@RequestMapping(value="element/editFileUpload.html",method = RequestMethod.POST)
+	private String editFileUpload(@ModelAttribute FormFile formFile,@RequestParam Integer elementId, @RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status){
+				
+		formfileDao.update(formFile);
+		status.setComplete();	
+		
+		return "redirect:list.html?formId="+formId+"&pageId="+pageId;				
+	}
+	
+		
 	@RequestMapping(value="/element/addTextbox.html",method = RequestMethod.GET)
 	private String addTextbox(@RequestParam Integer pageId, @RequestParam Integer formId,ModelMap model)
 	{
@@ -86,14 +150,11 @@ public class ElementController {
 		model.put("textbox", textboxElement);
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"'>Elements</a>");
-		
 		return "element/addTextbox";
 	}
 	
 	@RequestMapping(value="/element/addTextbox.html",method = RequestMethod.POST)
-	private String addTextbox( @ModelAttribute Textbox textbox,@RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status)
-	{
+	private String addTextbox( @ModelAttribute Textbox textbox,@RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status){
 		FormElement savedElement = elementDao.saveElement(textbox);
 		
 		Page changedPage = pageDao.getPage(pageId);
@@ -103,20 +164,18 @@ public class ElementController {
 		
 		status.setComplete();
 		
-		return "redirect:list.html?formId="+formId+"&pageId="+pageId;	
+		 return "redirect:list.html?formId="+formId+"&pageId="+pageId;		
 	}
 
 
 	@RequestMapping(value="/element/editTextbox.html",method = RequestMethod.GET)
-	private String editTextbox(@RequestParam Integer elementId,@RequestParam Integer pageId,@RequestParam Integer formId, ModelMap model)
-	{
+	private String editTextbox(@RequestParam Integer elementId, @RequestParam Integer pageId, @RequestParam Integer formId, ModelMap model){
 		
 		Textbox curElement = (Textbox)elementDao.getElement(elementId);
 		
 		model.put("textbox", curElement);
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"'>Elements</a>");
 		
 		return "element/editTextbox";
 	}
@@ -144,16 +203,14 @@ public class ElementController {
 		
 		//FormElement changedElement = elementDao.saveElement(curElement);
 		
-		Boolean result = elementDao.delete(curElement);
+		elementDao.delete(curElement);
 		
 		
 		return "redirect:list.html?formId="+formId+"&pageId="+pageId;
 	}
 
 	@RequestMapping(value="/element/addCheckbox.html",method = RequestMethod.GET)
-	private String addCheckbox(@RequestParam Integer pageId, @RequestParam Integer formId,ModelMap model)
-	{
-
+	private String addCheckbox(@RequestParam Integer pageId, @RequestParam Integer formId,ModelMap model){
 	
 		MultipleChoice checkboxElement;
 		
@@ -174,7 +231,6 @@ public class ElementController {
 		model.put("checkbox", checkboxElement);
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"'>Elements</a>");
 		
 		return "element/addCheckbox";
 	}
@@ -208,7 +264,6 @@ public class ElementController {
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
 		model.addAttribute("elementId", elementId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"'>Elements</a>");
 		
 		return "element/editCheckbox";
 	}

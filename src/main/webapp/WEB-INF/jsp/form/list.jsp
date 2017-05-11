@@ -33,10 +33,19 @@
 								<th>${form.submitDate}</th>
 								<td>${form.ownedBy.username}</td>
 								<td>
-									<a href="preview.html?formId=${form.id}">
-										<button	type="button" class="btn btn-info">Preview</button>
-									</a>
+									<sec:authorize	access="hasAuthority('User')">
+										<a href="formsheet.html?formId=${form.id}">
+											<button	type="button" class="btn btn-info">Fill Me Up !</button>
+										</a>
+									</sec:authorize>
+									<sec:authorize	access="hasAuthority('Admin') || hasAuthority('Staff')">
+										<a href="preview.html?formId=${form.id}">
+											<button	type="button" class="btn btn-info">Preview</button>
+										</a>
+									</sec:authorize>
+									
 									<c:if test="${empty form.submitDate}">
+										
 										<sec:authorize	access="hasAuthority('Admin') || hasAuthority('Staff')">
 											<a href="edit.html?id=${form.id}">
 												<button type="button" class="btn btn-primary">Edit</button>
@@ -46,6 +55,7 @@
 											</a>
 										</sec:authorize>										
 									</c:if>
+									
 									<sec:authorize	access="hasAuthority('Admin') || hasAuthority('Staff')">
 										<a href="delete.html?formId=${form.id}">
 											<button	type="button" class="glyphicon glyphicon-trash btn btn-danger">Delete</button>
