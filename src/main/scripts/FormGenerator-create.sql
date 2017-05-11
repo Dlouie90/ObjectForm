@@ -29,8 +29,8 @@
 
     create table AssignedForms (
         Id  serial not null,
-        FORM_ID int4,
-        MEMBER_ID int4,
+        form_Id int4,
+        member_Id int4,
         primary key (Id)
     );
 
@@ -199,13 +199,13 @@
         references Answer;
 
     alter table AssignedForms 
-        add constraint FKabtjv10st4ug0gsk5pr9qig0n 
-        foreign key (FORM_ID) 
+        add constraint FKshysm6cakm536y3ifcp4xowu2 
+        foreign key (form_Id) 
         references forms;
 
     alter table AssignedForms 
-        add constraint FKhtu4qkcxhwnqh2rhos9f0fu3k 
-        foreign key (MEMBER_ID) 
+        add constraint FKfq1irlpj9esshk4ui5pqg9xuk 
+        foreign key (member_Id) 
         references Members;
 
     alter table FileUploadForm 

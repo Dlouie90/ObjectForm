@@ -16,3 +16,5 @@ DROP TABLE formelement CASCADE;
 DROP TABLE assignedforms CASCADE;
 DROP TABLE pdf_files CASCADE;
 DROP TABLE FileUploadForm CASCADE;
+DROP TABLE formelement_fileuploadform CASCADE;
+DROP TABLE members_assignedforms CASCADE;

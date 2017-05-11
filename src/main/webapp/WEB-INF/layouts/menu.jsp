@@ -31,12 +31,14 @@
 	 						<li role="separator" class="divider"></li>	 						
 	 						<li><a href="../form/publish.html">Publish Form</a></li>
 	 					</ul>
-	 				</li> 					
+	 				</li>
+	 				
+	 				<li> 					
+	 					<a href="../pdffile/list.html">Manage PDF Files</a><span class="sr-only">(current)</span> 					
+	 				</li>				
  				</sec:authorize> 				
  				
- 				<li> 					
- 					<a href="../pdffile/list.html">Manage PDF Files</a><span class="sr-only">(current)</span> 					
- 				</li>
+ 				
  				
  				<li class="dropdown"><a href="#" class="dropdown-toggle"
  					data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -50,8 +52,10 @@
  						<li><a href="../member/list.html">Edit profile</a></li>
  						<li><a href="../member/updatepassword.html">Update Password</a></li> 																	
  						
- 						<li role="separator" class="divider"></li>
- 						<li><a href="../member/list.html">Users</a></li>
+ 						<sec:authorize access="hasAuthority('Admin') || hasAuthority('Staff')">
+ 							<li role="separator" class="divider"></li>
+ 							<li><a href="../member/list.html">Users</a></li>	
+ 						</sec:authorize> 						
  					</ul>
  				</li>					
  			</ul>

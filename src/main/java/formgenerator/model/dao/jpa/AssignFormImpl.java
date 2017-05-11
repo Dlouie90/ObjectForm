@@ -29,4 +29,16 @@ public class AssignFormImpl implements AssignFormDAO {
 		entityManager.merge(assigned);
 	}
 
+	@Override
+	@Transactional
+	public boolean removeAssignment(AssignedForm ass) {
+		entityManager.remove(ass);
+		return true;		
+	}
+
+	@Override
+	public AssignedForm getAssignment(Integer id) {		
+		return entityManager.find(AssignedForm.class, id);
+	}
+
 }

@@ -56,7 +56,7 @@ public class ElementDaoImpl implements ElementDAO {
 		}
 		
 		BeanUtils.copyProperties(element, m);
-		entityManager.merge(m);		
+		//entityManager.merge(m);		
 		return entityManager.merge(element);	
 	}
 

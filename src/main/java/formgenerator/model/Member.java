@@ -13,13 +13,16 @@
 package formgenerator.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -66,12 +69,21 @@ public class Member implements Serializable {
 	@Column(name="Enabled")
 	private boolean enabled;
 	
-	@OneToOne(cascade = {CascadeType.ALL })
+	@OneToOne(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
 	private Address address;
 			
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	private Role roles;
 	
+	@OneToMany(mappedBy="member", orphanRemoval=true)
+	private Set<AssignedForm> assignedForm;
+	
+	public Set<AssignedForm> getAssignedForm() {
+		return assignedForm;
+	}
+	public void setAssignedForm(Set<AssignedForm> assignedForm) {
+		this.assignedForm = assignedForm;
+	}
 	public Integer getId() {
 		return id;
 	}

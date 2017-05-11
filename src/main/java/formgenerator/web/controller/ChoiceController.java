@@ -35,7 +35,6 @@ public class ChoiceController {
 		model.addAttribute("pageId", pageId);
 		model.addAttribute("formId", formId);
 		model.addAttribute("elementId", elementId);
-		model.addAttribute("menu", "<a style='color: white' href='../member/list.html'>Users</a>&nbsp;&nbsp;<a style='color: white' href='../form/list.html'>Forms</a>&nbsp;\\&nbsp;<a style='color: white' href='../page/list.html?formId="+formId+"'>Pages</a>&nbsp;\\&nbsp;<a style='color: white' href='../element/list.html?formId="+formId+"&pageId="+pageId+"&elementId="+elementId+"'>Elements</a>&nbsp;\\&nbsp;<a style='color: white' href='list.html?formId="+formId+"&pageId="+pageId+"&elementId="+elementId+"'>Choices</a>");
 		
 		return "choice/list";
 		
@@ -84,10 +83,9 @@ public class ChoiceController {
 	}
 	
 	@RequestMapping(value="/choice/edit.html",method = RequestMethod.POST)
-	private String editTextbox( @ModelAttribute Choice choice,@RequestParam Integer elementId, @RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status)
+	private String editTextbox( @ModelAttribute Choice choice, @RequestParam Integer elementId, @RequestParam Integer pageId, @RequestParam Integer formId, SessionStatus status)
 	{
-		Choice savedChoice = choiceDao.saveChoice(choice);
-		
+		choiceDao.saveChoice(choice);		
 		return "redirect:list.html?formId="+formId+"&pageId="+pageId+"&elementId="+elementId;	
 	}
 	

@@ -2,8 +2,10 @@ package formgenerator.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,12 +24,10 @@ public class AssignedForm implements Serializable {
 	@Column(name="Id", unique = true, nullable = false)
 	private Integer id;	
 	
-	@ManyToOne
-	@JoinColumn(name="MEMBER_ID")
-	private Member member;	
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Member member;
 	
-	@ManyToOne
-	@JoinColumn(name="FORM_ID")
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Form form;
 
 	public Integer getId() {

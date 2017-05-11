@@ -2,6 +2,7 @@ package formgenerator.web.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,8 +50,14 @@ public class MemberController {
 
 	@RequestMapping("/member/list.html")
 	private String list(ModelMap model) {
+			
+		List<Member> members = memberDao.getMembers();
+		model.put("members",  members);
 		
-		model.put("members",  memberDao.getMembers());
+		members.forEach(member -> {
+			System.out.println("The user is " +member.getId() + "And assigned form is : " +member.getAssignedForm().size());
+		});
+		
 		return "member/list";
 	}
 	
@@ -156,6 +163,7 @@ public class MemberController {
 		return "member/assign";
 	}
 	
+		
 	@RequestMapping(value = "/member/assign.html", method = RequestMethod.POST)	
 	private String assign(@ModelAttribute AssignedForm assignForm) {
 		
@@ -165,6 +173,16 @@ public class MemberController {
 		assignForm.setForm(form);
 		
 		assignFormDao.saveAssigned(assignForm);		
+		return "redirect:list.html";
+	}
+	
+	@RequestMapping(value = "/member/unassign.html", method = RequestMethod.GET)	
+	private String unassign(@RequestParam Integer assignmentId) {
+		
+		AssignedForm assign = assignFormDao.getAssignment(assignmentId);		
+		assign.setForm(null);
+		assign.setMember(null);
+		
 		return "redirect:list.html";
 	}
 	

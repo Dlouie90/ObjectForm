@@ -24,10 +24,10 @@ INSERT INTO members(id, email, enabled, first_name, last_name, middle_name, pass
 	VALUES (1, 'test@gmail.com', true, 'test', 'test', 'test', '$2a$10$3pmt4bGNRF6YCCyr8gusTOwVQO8pUmFRGWjYY8eeZy23RnD4G9HhG', 'test', 1, 1);
 	
 INSERT INTO members(id, email, enabled, first_name, last_name, middle_name, password, username, address_id, roles_role_id) 
-	VALUES (2, 'manish05@gmail.com', false, 'John', 'Doe', '', '$2a$10$5hm7uyBSr7FH.hrKEjJ.9OJujvS51vFaCXJUDFAT5/mwZ5K.j/5VK', 'amanish05', 2, 2);
+	VALUES (2, 'manish05@gmail.com', false, 'John', 'Doe', '', '$2a$10$3pmt4bGNRF6YCCyr8gusTOwVQO8pUmFRGWjYY8eeZy23RnD4G9HhG', 'amanish05', 2, 2);
 	
 INSERT INTO members(id, email, enabled, first_name, last_name, middle_name, password, username, address_id, roles_role_id) 
-	VALUES (3, 'manish10@gmail.com', true, 'Jane', 'Doe', '', '$2a$10$MqrBt.e.AuKqRWeIoddi6OCe43XKTaaa2.AgPc6S.OvtFxdwifOHq', 'amanish10', 3, 3);
+	VALUES (3, 'manish10@gmail.com', true, 'Jane', 'Doe', '', '$2a$10$3pmt4bGNRF6YCCyr8gusTOwVQO8pUmFRGWjYY8eeZy23RnD4G9HhG', 'amanish10', 3, 3);
         
 INSERT INTO forms (id, created_date, description, modified_date, submission_date, title, ownerid) 
 	VALUES (1, '2017-03-20 04:20:45.773', 'Divorce Papers', NULL, NULL,  'CONSULAR PROCESSING GENERAL INFORMATION', 1);
