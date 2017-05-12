@@ -6,7 +6,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,8 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import formgenerator.model.DateText;
 import formgenerator.model.FileUploadForm;
 import formgenerator.model.Form;
 import formgenerator.model.FormElement;
@@ -45,7 +43,7 @@ import formgenerator.model.dao.ObjectFormDAOI;
 import formgenerator.model.dao.PageDAO;
 
 @Controller
-@SessionAttributes("form")
+@SessionAttributes({"form","page"})
 public class FormController {
 	
 	@Autowired
@@ -62,16 +60,19 @@ public class FormController {
 	
 	private final ObjectFormDAOI<GroupElement> groupDao;
 	private final ObjectFormDAOI<Textbox> textDao;
+	private final ObjectFormDAOI<DateText> dateDao;
 	private final ObjectFormDAOI<MultipleChoice> multiChoiceDao;
 	private final ObjectFormDAOI<FormFile> formfileDao;
 		
 	@Autowired	
 	public FormController(@Qualifier("GroupElementDAO") final ObjectFormDAOI<GroupElement> dao,
 			@Qualifier("TextboxDAO") final ObjectFormDAOI<Textbox> textdao,
+			@Qualifier("DateTextDAO") final ObjectFormDAOI<DateText> datedao,
 			@Qualifier("MultipleChoiceDAO") final ObjectFormDAOI<MultipleChoice> multichoicedao,
 			@Qualifier("FormFileUpload") final ObjectFormDAOI<FormFile> filedao){
 		this.groupDao = dao;
 		this.textDao = textdao;
+		this.dateDao = datedao;
 		this.multiChoiceDao = multichoicedao;
 		this.formfileDao = filedao;
 	}
@@ -244,6 +245,13 @@ public class FormController {
 				elements.add(ge);								
 			}
 			
+			if(e.getType().equals("DateText")){
+				Map<String, String> params = new HashMap<>();
+				params.put("id", e.getId().toString());
+				DateText ge = dateDao.findByCriteria(params, DateText.class);
+				elements.add(ge);								
+			}
+			
 			if(e.getType().equals("MultipleChoice")){
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
@@ -317,6 +325,13 @@ public class FormController {
 				elements.add(ge);								
 			}
 			
+			if(e.getType().equals("DateText")){
+				Map<String, String> params = new HashMap<>();
+				params.put("id", e.getId().toString());
+				DateText ge = dateDao.findByCriteria(params, DateText.class);
+				elements.add(ge);								
+			}
+			
 			if(e.getType().equals("MultipleChoice")){
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
@@ -333,13 +348,20 @@ public class FormController {
 			System.out.println("The type is: " +e.getType());
 		}
 
+		p.setElements(elements);
 		model.put("form", curForm);		
 		model.addAttribute("elements", elements);
 		model.addAttribute("pageLinks", pageLinks);
+		model.put("page", p);
 
 		return "form/preview";
 	}
-
+	
+	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
+	private String preview(@ModelAttribute Page page, SessionStatus status) {
+		return "redirect:list.html";
+	}
+	
 	@RequestMapping(value = "/form/delete.html", method = RequestMethod.GET)
 	private String edit(@RequestParam Integer formId) {
 		Form form = formDao.getForm(formId);

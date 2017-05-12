@@ -28,61 +28,75 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="pages")
-public class Page implements Serializable{
-	
+@Table(name = "pages")
+public class Page implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="Page_Id")
+	@Column(name = "Page_Id")
 	private Integer id;
-	
-	@Column(name="Page_Number")
+
+	@Column(name = "Page_Number")
 	private Byte number;
-	
-	@Column(name="Description")
+
+	@Column(name = "Description")
 	private String description;
-	
+
 	@ManyToOne
-	@JoinColumn(name="Form_Id")
+	@JoinColumn(name = "Form_Id")
 	private Form form;
-	
-	@ManyToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-	@JoinTable(name = "page_formElements",
-    joinColumns=@JoinColumn(name = "page_id"),
-    inverseJoinColumns=@JoinColumn(name="formElement_id"))
-	@OrderBy(value="id")
+
+	public Page() {
+	}
+
+	public Page(List<FormElement> elements) {
+		this.elements = elements;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "page_formElements", joinColumns = @JoinColumn(name = "page_id"), inverseJoinColumns = @JoinColumn(name = "formElement_id"))
+	@OrderBy(value = "order_id")
 	private List<FormElement> elements;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Byte getNumber() {
 		return number;
 	}
+
 	public void setNumber(Byte number) {
 		this.number = number;
 	}
+
 	public Form getForm() {
 		return form;
 	}
+
 	public void setForm(Form form) {
 		this.form = form;
 	}
+
 	public List<FormElement> getElements() {
 		return elements;
 	}
+
 	public void setElements(List<FormElement> elements) {
 		this.elements = elements;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
-	}	
+	}
 }

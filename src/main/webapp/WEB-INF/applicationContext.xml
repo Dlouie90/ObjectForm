@@ -82,5 +82,6 @@
     <bean id="TextboxDAO" class="formgenerator.model.dao.jpa.implementations.TextboxDAO"></bean>
     <bean id="MultipleChoiceDAO" class="formgenerator.model.dao.jpa.implementations.MultipleChoiceDAO"></bean>
     <bean id="FormFileUpload" class="formgenerator.model.dao.jpa.implementations.FormFileUpload"></bean>
+    <bean id="DateTextDAO" class="formgenerator.model.dao.jpa.implementations.DateTextDAO"></bean>
 
 </beans>
