@@ -16,7 +16,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -55,10 +55,13 @@ public class Page implements Serializable {
 		this.elements = elements;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "page_formElements", joinColumns = @JoinColumn(name = "page_id"), inverseJoinColumns = @JoinColumn(name = "formElement_id"))
 	@OrderBy(value = "order_id")
 	private List<FormElement> elements;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<AnswerSheet> answersheet;
 
 	public Integer getId() {
 		return id;
@@ -98,5 +101,13 @@ public class Page implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<AnswerSheet> getAnswersheet() {
+		return answersheet;
+	}
+
+	public void setAnswersheet(List<AnswerSheet> answersheet) {
+		this.answersheet = answersheet;
 	}
 }

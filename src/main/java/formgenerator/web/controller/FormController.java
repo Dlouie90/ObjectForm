@@ -28,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import formgenerator.model.Answer;
+import formgenerator.model.AnswerSheet;
 import formgenerator.model.Choice;
 import formgenerator.model.DateText;
 import formgenerator.model.DateTextAnswer;
@@ -314,6 +315,7 @@ public class FormController {
 			p = pageDao.getPage(defaultPage);
 		}
 		
+		AnswerSheet as = new AnswerSheet();
 		List<FormElement> elements = new ArrayList<>();
 		for (FormElement e : p.getElements()) {
 			
@@ -391,6 +393,7 @@ public class FormController {
 	
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
 	private String preview(@ModelAttribute Page page, SessionStatus status) {
+		status.setComplete();
 		return "redirect:list.html";
 	}
 	

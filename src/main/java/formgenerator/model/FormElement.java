@@ -74,7 +74,7 @@ public abstract class FormElement implements Serializable {
 	@OneToMany
 	private List<FileUploadForm> fileUploadForm;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "formElement_answers", joinColumns = @JoinColumn(name = "formElement_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private List<Answer> answers;
 
