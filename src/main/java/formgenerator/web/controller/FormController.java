@@ -26,7 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+
+import formgenerator.model.Answer;
+import formgenerator.model.Choice;
 import formgenerator.model.DateText;
+import formgenerator.model.DateTextAnswer;
 import formgenerator.model.FileUploadForm;
 import formgenerator.model.Form;
 import formgenerator.model.FormElement;
@@ -34,8 +38,10 @@ import formgenerator.model.FormFile;
 import formgenerator.model.GroupElement;
 import formgenerator.model.Member;
 import formgenerator.model.MultipleChoice;
+import formgenerator.model.MultipleChoiceAnswer;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
+import formgenerator.model.TextboxAnswer;
 import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
@@ -276,7 +282,7 @@ public class FormController {
 	}
 
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.GET)
-	private String preview(ModelMap model, @RequestParam Integer formId, @RequestParam(required = false) Integer fpId) {
+	private String preview(ModelMap model, @RequestParam Integer formId, @RequestParam(required = false) Integer fpId, Principal principal) {
 		
 		if (fpId == null) {
 			fpId = 0;
@@ -322,6 +328,14 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				Textbox ge = textDao.findByCriteria(params, Textbox.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						TextboxAnswer textanswer = (TextboxAnswer) a;
+						answers.add(textanswer);
+					}
+				}
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -329,6 +343,14 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				DateText ge = dateDao.findByCriteria(params, DateText.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						DateTextAnswer dateanswer = (DateTextAnswer) a;
+						answers.add(dateanswer);
+					}
+				}
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -336,6 +358,16 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				MultipleChoice ge = multiChoiceDao.findByCriteria(params, MultipleChoice.class);
+				List<Answer> answers = new ArrayList<Answer>();
+				for (Answer a : ge.getAnswers()) {
+					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
+						MultipleChoiceAnswer multianswer = (MultipleChoiceAnswer) a;
+						List<Choice> choices = multianswer.getChoiceAnswers();
+						multianswer.setChoiceAnswers(choices);
+						answers.add(multianswer);
+					}
+				}
+				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			

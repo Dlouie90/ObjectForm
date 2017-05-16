@@ -390,13 +390,13 @@ INSERT INTO formElement_answers(formElement_id, answer_id)
 	VALUES(21, 18);
 	
 INSERT INTO Answer(answerType, id, date_value, formId, memberId)
-	VALUES('TextBox', 19,'01/01/2015', 1, 1);	
+	VALUES('TextDateA', 19,'01/01/2015', 1, 1);	
 
 INSERT INTO formElement_answers(formElement_id, answer_id)
 	VALUES(22, 19);							
 	
 INSERT INTO Answer(answerType, id, date_value, formId, memberId)
-	VALUES('TextBox', 20,'01/12/2016', 1, 1);	
+	VALUES('TextDateA', 20,'01/12/2016', 1, 1);	
 
 INSERT INTO formElement_answers(formElement_id, answer_id)
 	VALUES(23, 20);	
