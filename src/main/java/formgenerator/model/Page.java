@@ -60,8 +60,8 @@ public class Page implements Serializable {
 	@OrderBy(value = "order_id")
 	private List<FormElement> elements;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<AnswerSheet> answersheet;
+	@OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
+	private List<AnswerSheet> answersheets;
 
 	public Integer getId() {
 		return id;
@@ -103,11 +103,22 @@ public class Page implements Serializable {
 		this.description = description;
 	}
 
-	public List<AnswerSheet> getAnswersheet() {
-		return answersheet;
+	public List<AnswerSheet> getAnswersheets() {
+		return answersheets;
+	}
+	
+	public AnswerSheet getAnswersheetsByMemberId(int memberId) {
+		for(AnswerSheet as: this.answersheets) {
+			if (as.getMember().getId() == memberId) {
+				return as;
+			}
+		}
+		return null;
 	}
 
-	public void setAnswersheet(List<AnswerSheet> answersheet) {
-		this.answersheet = answersheet;
+
+	public void setAnswersheets(List<AnswerSheet> answersheets) {
+		this.answersheets = answersheets;
 	}
+
 }

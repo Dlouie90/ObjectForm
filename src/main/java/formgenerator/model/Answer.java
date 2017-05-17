@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 
 //using table per concrete class inheritance strategy
@@ -43,6 +44,14 @@ public abstract class Answer implements Serializable{
 	@JoinColumn(name = "answersheetId")
 	private AnswerSheet answersheet;
 	
+	@Transient
+	@Column(name = "answerType", insertable = false, updatable = false)
+	private String type;
+	
+	public Answer() {
+		this.setType(this.getClass().getSimpleName());
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -60,6 +69,12 @@ public abstract class Answer implements Serializable{
 	}
 	public void setAnswersheet(AnswerSheet answersheet) {
 		this.answersheet = answersheet;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

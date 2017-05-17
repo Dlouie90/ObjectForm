@@ -145,11 +145,6 @@
         primary key (Page_Id)
     );
 
-    create table pages_answersheet (
-        Page_Page_Id int4 not null,
-        answersheet_id int4 not null
-    );
-
     create table pdf_files (
         file_id  serial not null,
         created_date timestamp,
@@ -192,9 +187,6 @@
 
     alter table Members 
         add constraint UK_ctwhq1mhwjtrsvpl0kp2iqhw unique (Username);
-
-    alter table pages_answersheet 
-        add constraint UK_edgspght1e4xqpf7dn252ih77 unique (answersheet_id);
 
     alter table Answer 
         add constraint FK8w69alqubn5lmxi4umm0n4pbq 
@@ -330,16 +322,6 @@
         add constraint FKlsq56jsg42mm80q2cr7evs6xj 
         foreign key (Form_Id) 
         references forms;
-
-    alter table pages_answersheet 
-        add constraint FKoawja6jiac8mp71t0qkvety38 
-        foreign key (answersheet_id) 
-        references answersheet;
-
-    alter table pages_answersheet 
-        add constraint FK1cdmfpvt10v6rdmecu26i5f83 
-        foreign key (Page_Page_Id) 
-        references pages;
 
     alter table pdf_files 
         add constraint FK7o4r63k0empq2jop6i774c6o 

@@ -29,9 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import formgenerator.model.Answer;
 import formgenerator.model.AnswerSheet;
-import formgenerator.model.Choice;
 import formgenerator.model.DateText;
-import formgenerator.model.DateTextAnswer;
 import formgenerator.model.FileUploadForm;
 import formgenerator.model.Form;
 import formgenerator.model.FormElement;
@@ -43,6 +41,7 @@ import formgenerator.model.MultipleChoiceAnswer;
 import formgenerator.model.Page;
 import formgenerator.model.Textbox;
 import formgenerator.model.TextboxAnswer;
+import formgenerator.model.dao.AnswerDAO;
 import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
@@ -50,7 +49,7 @@ import formgenerator.model.dao.ObjectFormDAOI;
 import formgenerator.model.dao.PageDAO;
 
 @Controller
-@SessionAttributes({"form","page"})
+@SessionAttributes({"form","answersheet"})
 public class FormController {
 	
 	@Autowired
@@ -64,6 +63,9 @@ public class FormController {
 	
 	@Autowired
 	private ElementDAO elementDao;
+	
+	@Autowired
+	private AnswerDAO answerDao;
 	
 	private final ObjectFormDAOI<GroupElement> groupDao;
 	private final ObjectFormDAOI<Textbox> textDao;
@@ -315,7 +317,27 @@ public class FormController {
 			p = pageDao.getPage(defaultPage);
 		}
 		
-		AnswerSheet as = new AnswerSheet();
+		Member m = memberDao.getMemberbyUserName(principal.getName());
+		
+		AnswerSheet as = p.getAnswersheetsByMemberId(m.getId());
+		if (as.getAnswers() == null) {
+			as = new AnswerSheet(p, m);
+		}
+		else {
+			List<Answer> answers = new ArrayList<>();
+			for (Answer a: as.getAnswers()) {
+				if(a.getType().equals("Textbox")) {
+					TextboxAnswer ans = (TextboxAnswer) a;
+					answers.add(ans);
+				}
+				
+				if(a.getType().equals("MultipleChoice")) {
+					MultipleChoiceAnswer ans = (MultipleChoiceAnswer) a;
+					answers.add(ans);
+				}
+			}
+			as.setAnswers(answers);
+		}
 		List<FormElement> elements = new ArrayList<>();
 		for (FormElement e : p.getElements()) {
 			
@@ -330,14 +352,6 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				Textbox ge = textDao.findByCriteria(params, Textbox.class);
-				List<Answer> answers = new ArrayList<Answer>();
-				for (Answer a : ge.getAnswers()) {
-					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
-						TextboxAnswer textanswer = (TextboxAnswer) a;
-						answers.add(textanswer);
-					}
-				}
-				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -345,14 +359,6 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				DateText ge = dateDao.findByCriteria(params, DateText.class);
-				List<Answer> answers = new ArrayList<Answer>();
-				for (Answer a : ge.getAnswers()) {
-					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
-						DateTextAnswer dateanswer = (DateTextAnswer) a;
-						answers.add(dateanswer);
-					}
-				}
-				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -360,16 +366,6 @@ public class FormController {
 				Map<String, String> params = new HashMap<>();
 				params.put("id", e.getId().toString());
 				MultipleChoice ge = multiChoiceDao.findByCriteria(params, MultipleChoice.class);
-				List<Answer> answers = new ArrayList<Answer>();
-				for (Answer a : ge.getAnswers()) {
-					if (a.getUser().equals(memberDao.getMemberbyUserName(principal.getName()))) {
-						MultipleChoiceAnswer multianswer = (MultipleChoiceAnswer) a;
-						List<Choice> choices = multianswer.getChoiceAnswers();
-						multianswer.setChoiceAnswers(choices);
-						answers.add(multianswer);
-					}
-				}
-				ge.setAnswers(answers);
 				elements.add(ge);								
 			}
 			
@@ -382,11 +378,10 @@ public class FormController {
 			System.out.println("The type is: " +e.getType());
 		}
 
-		p.setElements(elements);
 		model.put("form", curForm);		
 		model.addAttribute("elements", elements);
 		model.addAttribute("pageLinks", pageLinks);
-		model.put("page", p);
+		model.put("answersheet", as);
 
 		return "form/preview";
 	}
