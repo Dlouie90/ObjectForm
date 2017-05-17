@@ -84,7 +84,7 @@
 										</tr>
 									</c:if> --%>
 								</c:if>
-							</c:forEach>
+							</c:forEach> 
 						</tbody>
 					</table>
 					<input type="submit" name="Save" value="Save"

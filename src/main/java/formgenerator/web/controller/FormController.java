@@ -326,12 +326,12 @@ public class FormController {
 		else {
 			List<Answer> answers = new ArrayList<>();
 			for (Answer a: as.getAnswers()) {
-				if(a.getType().equals("Textbox")) {
+				if(a.getType().equals("TextboxAnswer")) {
 					TextboxAnswer ans = (TextboxAnswer) a;
 					answers.add(ans);
 				}
 				
-				if(a.getType().equals("MultipleChoice")) {
+				if(a.getType().equals("MultipleChoiceAnswer")) {
 					MultipleChoiceAnswer ans = (MultipleChoiceAnswer) a;
 					answers.add(ans);
 				}
@@ -387,7 +387,8 @@ public class FormController {
 	}
 	
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
-	private String preview(@ModelAttribute Page page, SessionStatus status) {
+	private String preview(@ModelAttribute AnswerSheet answersheet, SessionStatus status) {
+		
 		status.setComplete();
 		return "redirect:list.html";
 	}
