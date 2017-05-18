@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import formgenerator.model.Answer;
 import formgenerator.model.dao.AnswerDAO;
@@ -22,11 +23,13 @@ public class AnswerDaoImpl implements AnswerDAO{
 	}
 
 	@Override
+	@Transactional
 	public Answer saveAnswer(Answer answer) {
 		return entityManager.merge(answer);
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Answer answer) {
 		entityManager.remove(answer);
 		return true;

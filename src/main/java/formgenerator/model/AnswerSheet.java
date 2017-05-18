@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Entity
 @Table(name = "answersheet")
 public class AnswerSheet implements Serializable {
@@ -78,5 +80,7 @@ public class AnswerSheet implements Serializable {
 	public void setMember(Member member) {
 		this.member = member;
 	}
+	
+	
 
 }

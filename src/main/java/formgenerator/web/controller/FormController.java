@@ -42,6 +42,7 @@ import formgenerator.model.Page;
 import formgenerator.model.Textbox;
 import formgenerator.model.TextboxAnswer;
 import formgenerator.model.dao.AnswerDAO;
+import formgenerator.model.dao.AnswerSheetDAO;
 import formgenerator.model.dao.ElementDAO;
 import formgenerator.model.dao.FormDAO;
 import formgenerator.model.dao.MemberDAO;
@@ -66,6 +67,9 @@ public class FormController {
 	
 	@Autowired
 	private AnswerDAO answerDao;
+	
+	@Autowired
+	private AnswerSheetDAO answersheetDao;
 	
 	private final ObjectFormDAOI<GroupElement> groupDao;
 	private final ObjectFormDAOI<Textbox> textDao;
@@ -325,7 +329,8 @@ public class FormController {
 		}
 		else {
 			List<Answer> answers = new ArrayList<>();
-			for (Answer a: as.getAnswers()) {
+			for (Answer a: answerDao.getAnswersBySheet(m.getId(), as.getId())) {
+				System.out.println(a.getType());
 				if(a.getType().equals("TextboxAnswer")) {
 					TextboxAnswer ans = (TextboxAnswer) a;
 					answers.add(ans);
@@ -339,7 +344,7 @@ public class FormController {
 			as.setAnswers(answers);
 		}
 		List<FormElement> elements = new ArrayList<>();
-		for (FormElement e : p.getElements()) {
+		for (FormElement e : elementDao.getElements(p.getId())) {
 			
 			if(e.getType().equals("GroupElement")){
 				Map<String, String> params = new HashMap<>();
@@ -387,8 +392,8 @@ public class FormController {
 	}
 	
 	@RequestMapping(value = { "/form/preview.html" }, method = RequestMethod.POST)
-	private String preview(@ModelAttribute AnswerSheet answersheet, SessionStatus status) {
-		
+	private String preview(@ModelAttribute("answersheet") AnswerSheet answersheet, SessionStatus status) {
+		answersheetDao.saveAnswerSheet(answersheet);
 		status.setComplete();
 		return "redirect:list.html";
 	}

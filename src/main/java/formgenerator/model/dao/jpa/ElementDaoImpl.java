@@ -71,7 +71,7 @@ public class ElementDaoImpl implements ElementDAO {
 	@Override
 	public List<FormElement> getElements(Integer pageId) {
 		// TODO Auto-generated method stub
-		 return entityManager.createQuery( "SELECT fe FROM FormElement fe JOIN fe.pages p WHERE p.id=:pageId ORDER BY fe.id ASC", FormElement.class ).setParameter("pageId", pageId)
+		 return entityManager.createQuery( "SELECT fe FROM FormElement fe JOIN fe.pages p WHERE p.id=:pageId ORDER BY fe.orderId ASC", FormElement.class ).setParameter("pageId", pageId)
 		            .getResultList();
 	}
 	
