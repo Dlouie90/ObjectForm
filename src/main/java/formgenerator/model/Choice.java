@@ -20,6 +20,8 @@ public class Choice implements Serializable{
 	
 	private String text;
 	
+	private Choice value;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -31,5 +33,11 @@ public class Choice implements Serializable{
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public Choice getValue() {
+		return value;
+	}
+	public void setValue(Choice value) {
+		this.value = value;
 	}
 }

@@ -38,7 +38,7 @@
 				</div>
 			</c:if>
 			<c:if test="${not empty elements}">
-				<form:form modelAttribute="answersheet" method="post">
+				<form:form modelAttribute="answersheet" method="POST">
 					<table class="table">
 						<tbody>
 							<c:forEach items="${elements}" var="element" varStatus="loop">
@@ -57,34 +57,17 @@
 													name="${element.name}" maxlength="element.maxLength" /></td>
 										</tr>
 									</c:if>
-									<%-- <c:if test="${element.type == 'MultipleChoice'}">
+									<c:if test="${element.type == 'MultipleChoice'}">
 										<tr>
 											<td>${element.title}<c:forEach
 													items="${element.choices}" var="choice">
-													<c:forEach items="${element.answers}" var="answer">
-														<c:forEach items="${answer.choiceAnswers}" var="canswer">
-															<c:choose>
-																<c:when test="${canswer.id == choice.id}">
-																	<form:radiobutton class="checkbox"
-																		style="display: inline;"
-																		path="elements[${loop.index}].answers[0].choiceAnswers[0]"
-																		value="${choice.text}" checked="checked" />${choice.text}
-													</c:when>
-																<c:otherwise>
-																	<form:radiobutton class="checkbox"
-																		style="display: inline;"
-																		path="elements[${loop.index}].answers[0].choiceAnswers[0]"
-																		value="${choice.text}" />${choice.text}
-													</c:otherwise>
-															</c:choose>
-														</c:forEach>
-													</c:forEach>
+													<form:checkbox path="answers[${loop.index}].choiceAnswers" value="${choice}"/>${choice.text}
 												</c:forEach>
 											</td>
 										</tr>
-									</c:if> --%>
+									</c:if>
 								</c:if>
-							</c:forEach> 
+							</c:forEach>
 						</tbody>
 					</table>
 					<input type="submit" name="Save" value="Save"

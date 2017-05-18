@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import formgenerator.model.Answer;
 import formgenerator.model.AnswerSheet;
+import formgenerator.model.Choice;
 import formgenerator.model.DateText;
 import formgenerator.model.FileUploadForm;
 import formgenerator.model.Form;
@@ -338,6 +339,7 @@ public class FormController {
 				
 				if(a.getType().equals("MultipleChoiceAnswer")) {
 					MultipleChoiceAnswer ans = (MultipleChoiceAnswer) a;
+					List<Choice> cl = ans.getChoiceAnswers();
 					answers.add(ans);
 				}
 			}

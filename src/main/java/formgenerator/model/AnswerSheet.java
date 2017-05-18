@@ -80,7 +80,5 @@ public class AnswerSheet implements Serializable {
 	public void setMember(Member member) {
 		this.member = member;
 	}
-	
-	
 
 }

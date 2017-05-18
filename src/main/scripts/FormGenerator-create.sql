@@ -45,6 +45,7 @@
     create table choices (
         id  serial not null,
         text varchar(255),
+        value bytea,
         primary key (id)
     );
 
